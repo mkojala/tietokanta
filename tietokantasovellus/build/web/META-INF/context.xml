@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/tietokantasovellus"/>
+<Context antiJARLocking="true" path="/tietokantasovellus">
+    <Resource name="jdbc/mkojala" auth="Container"
+        type="javax.sql.DataSource" removeAbandoned="true"
+        removeAbandonedTimeout="30" maxActive="100"
+        maxIdle="30" maxWait="10000" username="mkojala"
+        password="279acb3c53459270"
+        driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://localhost/mkojala" />
+</Context>
