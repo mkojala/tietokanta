@@ -1,13 +1,12 @@
+package Tietokanta.Servlets;
 
-package Tietokanta;
-
+import Tietokanta.Yhteys;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +19,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.servlet.RequestDispatcher;
 
 public class Servlet extends HttpServlet {
 
@@ -36,33 +35,34 @@ public class Servlet extends HttpServlet {
      * @throws javax.naming.NamingException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException, SQLException, NamingException {
-  Connection yhteys = Yhteys.getYhteys(); //Haetaan tietokantaluokalta yhteysolio
-  PreparedStatement kysely = null;
-  ResultSet tulokset = null;
-  PrintWriter out = response.getWriter(); 
-  response.setContentType("text/plain;charset=UTF-8");
+            throws ServletException, IOException, SQLException, NamingException {
+        Connection yhteys = Yhteys.getYhteys(); //Haetaan tietokantaluokalta yhteysolio
+        PreparedStatement kysely = null;
+        ResultSet tulokset = null;
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/plain;charset=UTF-8");
 
-  try {
-    //Alustetaan muuttuja jossa on Select-kysely, joka palauttaa lukuarvon:
-    String sqlkysely = "SELECT 1+1 as two";
 
-    kysely = yhteys.prepareStatement(sqlkysely);
-    tulokset = kysely.executeQuery();
-    if(tulokset.next()) {
-      //Tuloksen arvoksi pitäisi tulla numero kaksi.
-      int tulos = tulokset.getInt("two");
-      out.println("Tulos: "+tulos);
-    } else {
-      out.println("Virhe!"); 
+        try {
+            //Alustetaan muuttuja jossa on Select-kysely, joka palauttaa lukuarvon:
+            String sqlkysely = "SELECT 1+1 as two";
+
+            kysely = yhteys.prepareStatement(sqlkysely);
+            tulokset = kysely.executeQuery();
+            if (tulokset.next()) {
+                //Tuloksen arvoksi pitäisi tulla numero kaksi.
+                int tulos = tulokset.getInt("two");
+                out.println("Tulos: " + tulos);
+            } else {
+                out.println("Virhe!");
+            }
+        } catch (Exception e) {
+            out.println("Virhe: " + e.getMessage());
+        }
+
+        tulokset.close();
+        kysely.close();
     }
-  } catch (Exception e) {
-    out.println("Virhe: "+e.getMessage()); 
-  }
-
-  tulokset.close(); 
-  kysely.close();
-}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -77,7 +77,7 @@ public class Servlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
@@ -99,7 +99,7 @@ public class Servlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (NamingException ex) {

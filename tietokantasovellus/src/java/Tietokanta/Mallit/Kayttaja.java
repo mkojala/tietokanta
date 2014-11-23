@@ -1,5 +1,6 @@
-package Tietokanta;
+package Tietokanta.Mallit;
 
+import Tietokanta.Yhteys;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
