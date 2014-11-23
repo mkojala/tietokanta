@@ -1,9 +1,7 @@
 CREATE TABLE "asiakas"
 (
 asiakas_id SERIAL PRIMARY KEY,
-etunimi character varying(30) NOT NULL,
-sukunimi character varying(30) NOT NULL,
-osoite character varying(120) NOT NULL,
+nimi character varying(30) NOT NULL,
 salasana character varying(8) NOT NULL
 
 );
@@ -11,8 +9,7 @@ salasana character varying(8) NOT NULL
 CREATE TABLE "laakari"
 (
 laakari_id SERIAL PRIMARY KEY,
-etunimi character varying(30) NOT NULL,
-sukunimi character varying(30) NOT NULL,
+nimi character varying(30) NOT NULL,
 salasana character varying(8) NOT NULL
 );
  
