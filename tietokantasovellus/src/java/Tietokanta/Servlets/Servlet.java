@@ -1,5 +1,6 @@
 package Tietokanta.Servlets;
 
+import Tietokanta.Mallit.Kayttaja;
 import Tietokanta.Yhteys;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,7 @@ import javax.naming.NamingException;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -42,7 +44,6 @@ public class Servlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/plain;charset=UTF-8");
 
-
         try {
             //Alustetaan muuttuja jossa on Select-kysely, joka palauttaa lukuarvon:
             String sqlkysely = "SELECT 1+1 as two";
@@ -62,6 +63,12 @@ public class Servlet extends HttpServlet {
 
         tulokset.close();
         kysely.close();
+
+        List<Kayttaja> kayttajat = Kayttaja.getKayttajat();
+
+        for (Kayttaja k : kayttajat) {
+        out.println(k.getNimi());
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

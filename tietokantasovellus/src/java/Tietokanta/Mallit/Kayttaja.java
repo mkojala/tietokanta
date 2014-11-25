@@ -7,26 +7,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 public class Kayttaja {
 
-    private int id;
+    private int kayttaja_id;
     private String nimi;
     private String salasana;
+    private int oikeustaso;
 
     public Kayttaja() {
 
     }
 
-    public Kayttaja(int id, String nimi, String salasana) {
-        this.id = id;
+    public Kayttaja(int kayttaja_id, String nimi, String salasana, int oikeustaso) {
+        this.kayttaja_id = kayttaja_id;
         this.nimi = nimi;
         this.salasana = salasana;
+        this.oikeustaso = oikeustaso;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int kayttaja_id) {
+        this.kayttaja_id = kayttaja_id;
     }
 
     public void setNimi(String nimi) {
@@ -37,8 +41,12 @@ public class Kayttaja {
         this.salasana = salasana;
     }
 
+    public void setOikeustaso(int oikeustaso) {
+        this.oikeustaso = oikeustaso;
+    }
+
     public int getId() {
-        return this.id;
+        return this.kayttaja_id;
     }
 
     public String getNimi() {
@@ -49,39 +57,50 @@ public class Kayttaja {
         return this.salasana;
     }
 
-    public static List<Kayttaja> getKayttajat() throws NamingException, SQLException {
-        String sql = "SELECT asiakas_id, nimi, salasana from asiakas";
+    public int getOikeustaso() {
+        return this.oikeustaso;
+    }
 
-        Connection yhteys = Yhteys.getYhteys();
-        PreparedStatement kysely = yhteys.prepareStatement(sql);
-        ResultSet tulokset = kysely.executeQuery();
-
+    public static List<Kayttaja> getKayttajat() {
         ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
-        while (tulokset.next()) {
-
-            Kayttaja kayttaja = new Kayttaja();
-
-            kayttaja.setId(tulokset.getInt("asiakas_id"));
-
-            kayttaja.setNimi(tulokset.getString("nimi"));
-
-            kayttaja.setSalasana(tulokset.getString("salasana"));
-
-            kayttajat.add(kayttaja);
-        }
-        kayttajat.add(new Kayttaja(111, "Anssi Assi", "salasana"));
         try {
-            tulokset.close();
-        } catch (Exception e) {
-        }
-        try {
-            kysely.close();
-        } catch (Exception e) {
-        }
-        try {
-            yhteys.close();
-        } catch (Exception e) {
+            String sql = "SELECT kayttaja_id, nimi, salasana, oikeustaso from kayttaja";
+
+            Connection yhteys = Yhteys.getYhteys();
+            PreparedStatement kysely = yhteys.prepareStatement(sql);
+            ResultSet tulokset = kysely.executeQuery();
+
+            while (tulokset.next()) {
+
+                Kayttaja kayttaja = new Kayttaja();
+
+                kayttaja.setId(tulokset.getInt("kayttaja_id"));
+
+                kayttaja.setNimi(tulokset.getString("nimi"));
+
+                kayttaja.setSalasana(tulokset.getString("salasana"));
+
+                kayttajat.add(kayttaja);
+            }
+            kayttajat.add(new Kayttaja(111, "Anssi Assi", "salasana", 1));
+            try {
+                tulokset.close();
+            } catch (Exception e) {
+            }
+            try {
+                kysely.close();
+            } catch (Exception e) {
+            }
+            try {
+                yhteys.close();
+            } catch (Exception e) {
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
         }
         return kayttajat;
+
     }
 }

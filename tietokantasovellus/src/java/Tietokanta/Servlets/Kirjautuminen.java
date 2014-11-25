@@ -1,9 +1,7 @@
-
 package Tietokanta.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author joni
  */
-public class NewServlet extends HttpServlet {
+public class Kirjautuminen extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -24,20 +22,21 @@ public class NewServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  response.setContentType("text/html;charset=UTF-8");
-  
-  
- 
-  /* Asetetaan virheviesti */
-  request.setAttribute("viesti", "ei toimi");  
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-  /* Näytetään JSP-sivu  */
-  RequestDispatcher dispatcher = request.getRequestDispatcher("servlet.jsp");
-  
-  dispatcher.forward(request, response);
-}
+        String salasana = request.getParameter("password");
+        String kayttaja = request.getParameter("username");
+        System.out.println("kirjautuminen");
+        /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
+        if ("svinhufvud".equals(kayttaja) && "kissa".equals(salasana)) {
+            /* Jos tunnus on oikea, ohjataan käyttäjä HTTP-ohjauksella kissalistaan. */
+            response.sendRedirect("omasivu");
+        } else {
+            /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen.
+             * Tässä käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
+            naytaJSP("login.jsp", request, response);
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -77,5 +76,9 @@ public class NewServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

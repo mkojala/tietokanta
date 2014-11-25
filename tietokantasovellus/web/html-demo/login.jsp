@@ -1,26 +1,27 @@
-<!DOCTYPE html>
+<%-- 
+    Document   : login
+    Created on : Nov 23, 2014, 11:35:17 PM
+    Author     : manna
+--%>
 
-<html lang="fi">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
     <head>
-        <title>MediHome</title>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
         <link href="../css/bootstrap.css" rel="stylesheet">
         <link href="../css/bootstrap-theme.css" rel="stylesheet">
         <link href="../css/main.css" rel="stylesheet">
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-
-
-
-
+        <title>MediHome</title>
     </head>
     <body>
-
         <div class="container">
             <h1>MediHome</h1>
             <h4>Kirjaudu sisään</h4>
-            <form class="form-horizontal" role="form" action="etusivu1.html" method="POST">
+            <form class="form-horizontal" role="form" action="login.html" method="POST">
                 <div class="form-group">
                     <label for="ktunnus" class="col-md-2 control-label">Käyttäjätunnus</label>
                     <div class="col-md-5">
@@ -43,7 +44,7 @@
 
         <div class="container">
             <h4>Uusi asiakas? Rekisteröidy</h4>
-            <form class="form-horizontal" role="form" action="etusivu1.html" method="POST">
+            <form class="form-horizontal" role="form" action="login.html" method="POST">
                 <div class="form-group">
                     <label for="annaEtunimi" class="col-md-2 control-label">Etunimi</label>
                     <div class="col-md-5">
@@ -54,12 +55,6 @@
                     <label for="annaSukunimi" class="col-md-2 control-label">Sukunimi</label>
                     <div class="col-md-5">
                         <input type="text" class="form-control" id="annaSukunimi" name="Sukunimi" placeholder="Sukunimi">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="annaOsoite" class="col-md-2 control-label">Osoite</label>
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" id="annaOsoite" name="Osoite" placeholder="Osoite">
                     </div>
                 </div>
                 <div class="form-group">
@@ -74,6 +69,6 @@
                     </div>
                 </div>
             </form>
-        </div>    
+        </div>  
     </body>
 </html>
