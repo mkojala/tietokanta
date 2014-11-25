@@ -2,6 +2,7 @@ package Tietokanta.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,20 +23,8 @@ public class Kirjautuminen extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        String salasana = request.getParameter("password");
-        String kayttaja = request.getParameter("username");
-        System.out.println("kirjautuminen");
-        /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
-        if ("svinhufvud".equals(kayttaja) && "kissa".equals(salasana)) {
-            /* Jos tunnus on oikea, ohjataan käyttäjä HTTP-ohjauksella kissalistaan. */
-            response.sendRedirect("omasivu");
-        } else {
-            /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen.
-             * Tässä käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
-            naytaJSP("login.jsp", request, response);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,7 +39,9 @@ public class Kirjautuminen extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -64,7 +55,23 @@ public class Kirjautuminen extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String salasana = request.getParameter("password");
+        String kayttaja = request.getParameter("username");
+        System.out.println("kirjautuminen");
+        /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
+        if ("svinhufvud".equals(kayttaja) && "kissa".equals(salasana)) {
+            /* Jos tunnus on oikea, ohjataan käyttäjä HTTP-ohjauksella kissalistaan. */
+            response.sendRedirect("omasivu");
+        } else {
+            response.setContentType("text/html;charset=UTF-8");
+
+            /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen.
+             * Tässä käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
+            request.setAttribute("viesti", "väärä käyttäjätunnus tai salasana");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+
+            dispatcher.forward(request, response);
+        }
     }
 
     /**

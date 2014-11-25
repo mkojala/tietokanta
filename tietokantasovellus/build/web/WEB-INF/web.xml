@@ -22,7 +22,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Kirjautuminen</servlet-name>
-        <url-pattern>/Kirjautuminen</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
