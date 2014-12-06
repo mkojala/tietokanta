@@ -103,4 +103,7 @@ public class Kayttaja {
         return kayttajat;
 
     }
+    public static Kayttaja etsiKayttajaTunnuksilla(String kayttaja, String salasana){
+        
+    }
 }

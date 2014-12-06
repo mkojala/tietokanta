@@ -8,10 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author joni
- */
 public class Kirjautuminen extends HttpServlet {
 
     /**
@@ -24,7 +20,49 @@ public class Kirjautuminen extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String salasana = request.getParameter("password");
+        String kayttaja = request.getParameter("username");
+        System.out.println("kirjautuminen");
+        /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
+        /* Jos kummatkin parametrit ovat null, käyttäjä ei ole edes yrittänyt vielä kirjautua. 
+         * Näytetään pelkkä lomake */
+        if (kayttaja == null || salasana == null) {
+            naytaJSP("login.jsp", request, response);
+            return;
+        }
+        //Tarkistetaan että vaaditut kentät on täytetty:
+        if (kayttaja.equals("") || kayttaja == null) {
+            asetaVirhe("Kirjautuminen epäonnistui! Et antanut käyttäjätunnusta.", request);
+            naytaJSP("login.jsp", request, response);
+            return;
+        }
+        /* Välitetään näkymille tieto siitä, mikä tunnus yritti kirjautumista */
+        request.setAttribute("kayttaja", kayttaja);
 
+        if (salasana.equals("")) {
+            asetaVirhe("Kirjautuminen epäonnistui! Et antanut salasanaa.", request);
+            naytaJSP("login.jsp", request, response);
+            return;
+        }
+        
+
+        if ("test".equals(kayttaja) && "test".equals(salasana)) {
+            /* Jos tunnus on oikea, ohjataan käyttäjä HTTP-ohjauksella kissalistaan. */
+            response.sendRedirect("omasivu");
+        } else {
+            response.setContentType("text/html;charset=UTF-8");
+
+            /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen.
+             * Tässä käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
+            request.setAttribute("viesti", "Väärä käyttäjätunnus tai salasana");
+            request.setAttribute("kayttaja", kayttaja);
+            naytaJSP("login.jsp", request, response);
+            
+           //  RequestDispatcher dispatcher =request.getRequestDispatcher("login.jsp");
+             
+            //dispatcher.forward(request, response);
+             
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -39,9 +77,7 @@ public class Kirjautuminen extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-
-        dispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -55,23 +91,7 @@ public class Kirjautuminen extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String salasana = request.getParameter("password");
-        String kayttaja = request.getParameter("username");
-        System.out.println("kirjautuminen");
-        /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
-        if ("svinhufvud".equals(kayttaja) && "kissa".equals(salasana)) {
-            /* Jos tunnus on oikea, ohjataan käyttäjä HTTP-ohjauksella kissalistaan. */
-            response.sendRedirect("omasivu");
-        } else {
-            response.setContentType("text/html;charset=UTF-8");
-
-            /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen.
-             * Tässä käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
-            request.setAttribute("viesti", "väärä käyttäjätunnus tai salasana");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-
-            dispatcher.forward(request, response);
-        }
+        processRequest(request,response);
     }
 
     /**
@@ -84,8 +104,17 @@ public class Kirjautuminen extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response) 
+    throws ServletException, IOException {
+//  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     RequestDispatcher dispatcher =request.getRequestDispatcher(loginjsp);
+             
+     dispatcher.forward(request, response);
+    }
+
+    //metodi jolla asetetaan virheviestin sisältö
+    public void asetaVirhe(String viesti, HttpServletRequest request) {
+        request.setAttribute("viesti", viesti);
     }
 
 }

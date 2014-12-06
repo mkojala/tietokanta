@@ -1,12 +1,13 @@
 <%-- 
-    Document   : login
-    Created on : Nov 23, 2014, 11:35:17 PM
-    Author     : manna
+    Document   : omasivu
+    Created on : Dec 6, 2014, 2:35:06 PM
+    Author     : Marianne
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang = fi>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
@@ -28,7 +29,7 @@
                 <div class="form-group">
                     <label for="ktunnus" class="col-md-2 control-label">Käyttäjätunnus</label>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="ktunnus" name="username" placeholder="Käyttäjätunnus">
+                        <input type="text" class="form-control" id="ktunnus" name="username" value="${kayttaja}" placeholder="Käyttäjätunnus">
                     </div>
                 </div>
                 <div class="form-group">
@@ -49,15 +50,9 @@
             <h4>Uusi asiakas? Rekisteröidy</h4>
             <form class="form-horizontal" role="form" action="login" method="POST">
                 <div class="form-group">
-                    <label for="annaEtunimi" class="col-md-2 control-label">Etunimi</label>
+                    <label for="annaNimi" class="col-md-2 control-label">Nimi</label>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="annaEtunimi" name="Etunimi" placeholder="Etunimi">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="annaSukunimi" class="col-md-2 control-label">Sukunimi</label>
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" id="annaSukunimi" name="Sukunimi" placeholder="Sukunimi">
+                        <input type="text" class="form-control" id="annaNimi" name="Nimi" placeholder="Nimi">
                     </div>
                 </div>
                 <div class="form-group">

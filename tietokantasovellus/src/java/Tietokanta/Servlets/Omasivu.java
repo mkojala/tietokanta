@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-public class NewServlet extends HttpServlet {
+/**
+ *
+ * @author Marianne
+ */
+public class Omasivu extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -21,20 +24,13 @@ public class NewServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  response.setContentType("text/html;charset=UTF-8");
-  
-  
- 
-  /* Asetetaan virheviesti */
-  request.setAttribute("viesti", "ei toimi");  
-
-  /* Näytetään JSP-sivu  */
-  RequestDispatcher dispatcher = request.getRequestDispatcher("servlet.jsp");
-  
-  dispatcher.forward(request, response);
-}
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("omasivu.jsp");
+        dispatcher.forward(request, response);
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

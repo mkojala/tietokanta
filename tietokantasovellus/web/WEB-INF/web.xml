@@ -12,6 +12,14 @@
         <servlet-name>Kirjautuminen</servlet-name>
         <servlet-class>Tietokanta.Servlets.Kirjautuminen</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Omasivu</servlet-name>
+        <servlet-class>Tietokanta.Servlets.Omasivu</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Varaussivu</servlet-name>
+        <servlet-class>Tietokanta.Servlets.Varaussivu</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -24,12 +32,20 @@
         <servlet-name>Kirjautuminen</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Omasivu</servlet-name>
+        <url-pattern>/omasivu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Varaussivu</servlet-name>
+        <url-pattern>/varaussivu</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>servlet.jsp</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
