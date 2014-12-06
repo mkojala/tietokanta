@@ -1,13 +1,39 @@
 INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
-    VALUES (1234, 'Marianne Ojala', 'kissa', 1);
+    VALUES (1, 'Marianne Ojala', 'asiakas', 2);
 
 INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
-    VALUES (0987, 'Tiina Talitintti', 'laakari', 2);
+    VALUES (2, 'Heikki Hemmonen', 'hemmo', 2);
 
-INSERT INTO varaus (varaus_id, kayttaja_id, paiva, kellonaika, oireet)
-    VALUES (2, 1234, '2014-10-11', '09:00:00', 'Kurkkukipu');
+INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
+    VALUES (3, 'Tiina Talitintti', 'laakari', 1);
 
-INSERT INTO raportti (raportti_id, kayttaja_id, potilasraportti, hoito_ohjeet, potilashistoria)
-    VALUES (1, 1234, 'Ei aikaisempia kaynteja', 'Lepoa', 'Diabeetikko');
+INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
+    VALUES (4, 'Ossi Ortopedi', 'jalka', 1);
+
+INSERT INTO laakarit 
+(laakari_id)
+select kayttaja_id from kayttaja where oikeustaso = 1;
+
+INSERT INTO asiakkaat 
+(asiakas_id)
+select kayttaja_id  from kayttaja where oikeustaso = 2;
+
+INSERT INTO varaus 
+(varaus_id, asiakas_id, laakari_id, paiva, kellonaika, oireet)
+    VALUES (1, 1, 3, '2014-10-12', '10:00:00', 'Selkäsärky');
+
+INSERT INTO varaus 
+(varaus_id, asiakas_id, laakari_id, paiva, kellonaika, oireet)
+    VALUES (2, 2, 4, '2014-10-12', '09:00:00', 'Kurkkukipu');
+
+INSERT INTO raportti (raportti_id, varaus_id, asiakas_id, potilasraportti, hoito_ohjeet)
+    VALUES (1, 1, 1, 'Selän särky rasituksesta johtuvaa.', 'Lepoa ja nesteytystä');
+
+INSERT INTO raportti (raportti_id, varaus_id, asiakas_id, potilasraportti, hoito_ohjeet)
+    VALUES (2, 2, 2, 'Kurkunpääntulehdus', 'Antibiootti 2x pv');
+
+
+
+
 
 
