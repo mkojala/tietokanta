@@ -1,6 +1,7 @@
 CREATE TABLE "kayttaja"
 (
 kayttaja_id int PRIMARY KEY,
+kayttajatunnus character varying(15) NOT NULL,
 nimi character varying(30) NOT NULL,
 salasana character varying(15) NOT NULL,
 oikeustaso int NOT NULL
