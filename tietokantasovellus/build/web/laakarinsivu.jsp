@@ -22,6 +22,7 @@
 
         <div class="container">    
             <h1>MediHome</h1>
+            <p>Käyttäjä: ${kayttaja}</p>
             <div>  
                 <h4>Aikataulu</h4>
                 <table class="table table-striped">            

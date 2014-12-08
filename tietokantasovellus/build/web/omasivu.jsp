@@ -21,7 +21,7 @@
     <body>     
         <div class="container">
             <h1>MediHome</h1>        
-                 <div class="container">
+            <div class="container">
                 <div>
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="../tietokantasovellus/omasivu">Omat tiedot</a></li>
@@ -31,9 +31,11 @@
             </div>
             <div>
                 <h4>Omat tiedot</h4>
-                <h6>Hoito-ohjeet:</h6>
-                
-                <h6>Potilasraportti:</h6>
+                <h4>Potilashistoria:</h4>
+                <c:forEach var="raportti" items="${raportit}"> 
+                    <br /><c:out value="${raportti.raportti}"/> 
+                    <br /><c:out value="${raportti.ohjeet}"/>
+                </c:forEach> 
             </div>
         </div>
     </body>

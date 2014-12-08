@@ -1,31 +1,35 @@
-INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
-    VALUES (1, 'Marianne Ojala', 'asiakas', 2);
+INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
+    VALUES (1, 'Marianne', 'Marianne Ojala', 'asiakas', 2);
 
-INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
-    VALUES (2, 'Heikki Hemmonen', 'hemmo', 2);
+INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
+    VALUES (2, 'Heikki', 'Heikki Hemmonen','hemmo', 2);
 
-INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
-    VALUES (3, 'Tiina Talitintti', 'laakari', 1);
+INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
+    VALUES (3, 'Tiina', 'Tiina Talitintti','laakari', 1);
 
-INSERT INTO kayttaja (kayttaja_id, nimi, salasana, oikeustaso)
-    VALUES (4, 'Ossi Ortopedi', 'jalka', 1);
+INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
+    VALUES (4, 'Ossi','Ossi Ortopedi', 'jalka', 1);
 
 INSERT INTO laakarit 
-SELECT kayttaja_id FROM kayttaja WHERE oikeustaso IS 1;
+(laakari_id)
+select kayttaja_id from kayttaja where oikeustaso = 1;
 
 INSERT INTO asiakkaat 
-SELECT kayttaja_id FROM kayttaja WHERE oikeustaso IS 2;
+(asiakas_id)
+select kayttaja_id  from kayttaja where oikeustaso = 2;
 
-INSERT INTO varaus (varaus_id, asiakas, laakari, paiva, kellonaika, oireet)
+INSERT INTO varaus 
+(varaus_id, asiakas_id, laakari_id, paiva, kellonaika, oireet)
     VALUES (1, 1, 3, '2014-10-12', '10:00:00', 'Selkäsärky');
 
-INSERT INTO varaus (varaus_id, asiakas, laakari, paiva, kellonaika, oireet)
+INSERT INTO varaus 
+(varaus_id, asiakas_id, laakari_id, paiva, kellonaika, oireet)
     VALUES (2, 2, 4, '2014-10-12', '09:00:00', 'Kurkkukipu');
 
-INSERT INTO raportti (raportti_id, varaus_id, asiakas, potilasraportti, hoito_ohjeet)
+INSERT INTO raportti (raportti_id, varaus_id, asiakas_id, potilasraportti, hoito_ohjeet)
     VALUES (1, 1, 1, 'Selän särky rasituksesta johtuvaa.', 'Lepoa ja nesteytystä');
 
-INSERT INTO raportti (raportti_id, varaus_id, asiakas, potilasraportti, hoito_ohjeet)
+INSERT INTO raportti (raportti_id, varaus_id, asiakas_id, potilasraportti, hoito_ohjeet)
     VALUES (2, 2, 2, 'Kurkunpääntulehdus', 'Antibiootti 2x pv');
 
 

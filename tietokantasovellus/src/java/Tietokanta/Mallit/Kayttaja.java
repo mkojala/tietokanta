@@ -114,7 +114,7 @@ public class Kayttaja {
 
     }
     public static Kayttaja etsiKayttajaTunnuksilla(String kayttaja, String salasana) throws NamingException, SQLException {
-        String sql = "SELECT kayttajatunnus, salasana FROM kayttaja where kayttajatunnus = ? AND salasana = ?";
+        String sql = "SELECT kayttaja_id, nimi, kayttajatunnus, salasana, oikeustaso FROM kayttaja where kayttajatunnus = ? AND salasana = ?";
         Connection yhteys = Yhteys.getYhteys();
         PreparedStatement kysely = yhteys.prepareStatement(sql);
         kysely.setString(1, kayttaja);
@@ -133,9 +133,11 @@ public class Kayttaja {
     //Kutsutaan sopivat tiedot vastaanottavaa konstruktoria 
             //ja asetetaan palautettava olio:
             kirjautunut = new Kayttaja();
-           // kirjautunut.setId(rs.getInt("kayttaja_id"));
-            kirjautunut.setNimi(rs.getString("kayttajatunnus"));
+            kirjautunut.setId(rs.getInt("kayttaja_id"));
+            kirjautunut.setNimi(rs.getString("nimi")); 
+            kirjautunut.setKayttajatunnus(rs.getString("kayttajatunnus"));
             kirjautunut.setSalasana(rs.getString("salasana"));
+            kirjautunut.setOikeustaso(rs.getInt("oikeustaso"));
         }
 
   //Jos kysely ei tuottanut tuloksia käyttäjä on nyt vielä null.

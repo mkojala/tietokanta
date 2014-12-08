@@ -19,6 +19,8 @@ import javax.naming.NamingException;
 public class Raportti {
     
    private int raportti_id;
+//   private Varaus varaus;
+//   private Kayttaja asiakas;
    private int varaus_id;
    private int asiakas_id;
    private String potilasraportti;
@@ -61,6 +63,48 @@ public class Raportti {
    public void setOhjeet(String hoito_ohjeet){
        this.hoito_ohjeet=hoito_ohjeet;
    }
+    public static List<Raportti> getAsiakkaanRaportit(int asiakas_id) {
+        ArrayList<Raportti> raportit = new ArrayList<Raportti>();
+        try {
+            String sql = "SELECT raportti_id, varaus_id, asiakas_id, potilasraportti, hoito_ohjeet from raportti where asiakas_id = ?";
+
+            Connection yhteys = Yhteys.getYhteys();
+            PreparedStatement kysely = yhteys.prepareStatement(sql);
+            kysely.setInt(1, asiakas_id);
+            ResultSet tulokset = kysely.executeQuery();
+
+            while (tulokset.next()) {
+                
+                Raportti raportti = new Raportti();
+                raportti.setRapID(tulokset.getInt("raportti_id"));
+                raportti.setVarID(tulokset.getInt("varaus_id"));
+                raportti.setAsID(tulokset.getInt("asiakas_id"));
+                raportti.setRaportti(tulokset.getString("potilasraportti"));
+                raportti.setOhjeet(tulokset.getString("hoito_ohjeet")); 
+                raportit.add(raportti);
+
+            }
+            try {
+                tulokset.close();
+            } catch (Exception e) {
+            }
+            try {   
+                kysely.close();
+            } catch (Exception e) {
+            }
+            try {
+                yhteys.close();
+            } catch (Exception e) {
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Raportti.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Raportti.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return raportit;
+
+    }
+   
    public static List<Raportti> getRaportit() {
         ArrayList<Raportti> raportit = new ArrayList<Raportti>();
         try {
@@ -77,8 +121,7 @@ public class Raportti {
                 raportti.setVarID(tulokset.getInt("varaus_id"));
                 raportti.setAsID(tulokset.getInt("asiakas_id"));
                 raportti.setRaportti(tulokset.getString("potilasraportti"));
-                raportti.setOhjeet(tulokset.getString("hoito_ohjeet"));
-                
+                raportti.setOhjeet(tulokset.getString("hoito_ohjeet")); 
                 raportit.add(raportti);
 
             }

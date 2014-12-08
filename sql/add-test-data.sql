@@ -1,14 +1,14 @@
 INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
-    VALUES (1, 'Marianne', 'Marianne Ojala', 'asiakas', 2);
+    VALUES (1, 'marianne', 'Marianne Ojala', 'asiakas', 2);
 
 INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
-    VALUES (2, 'Heikki', 'Heikki Hemmonen','hemmo', 2);
+    VALUES (2, 'heikki', 'Heikki Hemmonen','hemmo', 2);
 
 INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
-    VALUES (3, 'Tiina', 'Tiina Talitintti','laakari', 1);
+    VALUES (3, 'tiina', 'Tiina Talitintti','laakari', 1);
 
 INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
-    VALUES (4, 'Ossi','Ossi Ortopedi', 'jalka', 1);
+    VALUES (4, 'ossi','Ossi Ortopedi', 'jalka', 1);
 
 INSERT INTO laakarit 
 (laakari_id)

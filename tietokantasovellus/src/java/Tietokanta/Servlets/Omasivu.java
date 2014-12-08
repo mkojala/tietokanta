@@ -1,13 +1,17 @@
-
 package Tietokanta.Servlets;
 
+import Tietokanta.Mallit.Kayttaja;
+import Tietokanta.Mallit.Raportti;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,10 +30,23 @@ public class Omasivu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
+        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
+        if (kirjautunut == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        List<Raportti> raportit = Raportti.getAsiakkaanRaportit(kirjautunut.getId());
+        request.setAttribute("raportit", raportit);
+
+//        for (Raportti r : raportit) {
+//        out.println(r.getOhjeet());
+//        out.println(r.getRaportti());
+//        }
         response.setContentType("text/html;charset=UTF-8");
         naytaJSP("omasivu.jsp", request, response);
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,11 +87,12 @@ public class Omasivu extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response) 
-    throws ServletException, IOException {
+
+    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-     RequestDispatcher dispatcher =request.getRequestDispatcher(loginjsp);
-     dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(loginjsp);
+        dispatcher.forward(request, response);
     }
 
 }

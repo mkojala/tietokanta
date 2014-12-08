@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class Kirjautuminen extends HttpServlet {
 
@@ -29,11 +30,12 @@ public class Kirjautuminen extends HttpServlet {
         String salasana = request.getParameter("password");
         String kayttaja = request.getParameter("username");
         System.out.println("kirjautuminen");
-        Kayttaja kirjautuja = new Kayttaja();
-        kirjautuja.setKayttajatunnus(kayttaja);
-        kirjautuja.setSalasana(salasana);
-      //  kirjautuja = Kayttaja.etsiKayttajaTunnuksilla(kayttaja, salasana);
-        
+        HttpSession session = request.getSession();
+//        Kayttaja kirjautuja = new Kayttaja();
+//        kirjautuja.setKayttajatunnus(kayttaja);
+//        kirjautuja.setSalasana(salasana);
+        //  kirjautuja = Kayttaja.etsiKayttajaTunnuksilla(kayttaja, salasana);
+
         /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
         /* Jos kummatkin parametrit ovat null, käyttäjä ei ole edes yrittänyt vielä kirjautua.
          * Näytetään pelkkä lomake */
@@ -42,7 +44,7 @@ public class Kirjautuminen extends HttpServlet {
             return;
         }
 //Tarkistetaan että vaaditut kentät on täytetty:
-        if (kayttaja.equals("") || kayttaja == null) {
+        if (kayttaja.equals("")) {
             asetaVirhe("Kirjautuminen epäonnistui! Et antanut käyttäjätunnusta.", request);
             naytaJSP("login.jsp", request, response);
             return;
@@ -54,12 +56,18 @@ public class Kirjautuminen extends HttpServlet {
             naytaJSP("login.jsp", request, response);
             return;
         }
-        if(Kayttaja.etsiKayttajaTunnuksilla(kayttaja, salasana) != null){
-            response.sendRedirect("omasivu");
-        }
-        if ("test".equals(kayttaja)&& "test".equals(salasana)) {
-            /* Jos tunnus on oikea, ohjataan käyttäjä HTTP-ohjauksella kissalistaan. */
-            response.sendRedirect("omasivu");
+
+        Kayttaja k = Kayttaja.etsiKayttajaTunnuksilla(kayttaja, salasana);
+
+        if (k != null) {
+            session.setAttribute("kirjautunut", k);
+            if (k.getOikeustaso() == 2) {
+                response.sendRedirect("omasivu");
+            } else {
+                response.sendRedirect("laakarinsivu");
+            }
+            
+            
         } else {
             response.setContentType("text/html;charset=UTF-8");
             /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen.
@@ -68,7 +76,7 @@ public class Kirjautuminen extends HttpServlet {
             request.setAttribute("kayttaja", kayttaja);
             naytaJSP("login.jsp", request, response);
 
-           //  RequestDispatcher dispatcher =request.getRequestDispatcher("login.jsp");
+            //  RequestDispatcher dispatcher =request.getRequestDispatcher("login.jsp");
             //dispatcher.forward(request, response);
         }
     }

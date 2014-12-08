@@ -1,6 +1,6 @@
-
 package Tietokanta.Servlets;
 
+import Tietokanta.Mallit.Kayttaja;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,8 +31,6 @@ public class Laakarinsivu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        naytaJSP("laakarinsivu.jsp", request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -46,7 +45,18 @@ public class Laakarinsivu extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        HttpSession session = request.getSession();
+
+        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
+        if (kirjautunut == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        request.setAttribute("kayttaja", kirjautunut.getNimi());
+
+        response.setContentType("text/html;charset=UTF-8");
+        naytaJSP("laakarinsivu.jsp", request, response);
     }
 
     /**
@@ -60,7 +70,7 @@ public class Laakarinsivu extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
     }
 
     /**
@@ -72,11 +82,12 @@ public class Laakarinsivu extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response) 
-    throws ServletException, IOException {
+
+    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-     RequestDispatcher dispatcher =request.getRequestDispatcher(loginjsp);
-             
-     dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(loginjsp);
+
+        dispatcher.forward(request, response);
     }
 }
