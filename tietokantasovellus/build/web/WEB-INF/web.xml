@@ -20,6 +20,10 @@
         <servlet-name>Varaussivu</servlet-name>
         <servlet-class>Tietokanta.Servlets.Varaussivu</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Laakarinsivu</servlet-name>
+        <servlet-class>Tietokanta.Servlets.Laakarinsivu</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>Varaussivu</servlet-name>
         <url-pattern>/varaussivu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Laakarinsivu</servlet-name>
+        <url-pattern>/laakarinsivu</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -20,13 +20,15 @@
     </head>
     <body>     
         <div class="container">
-            <h1>MediHome</h1>
-            <div>
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="../omasivu.jsp">Omat tiedot</a></li>
-                    <li class="active"><a href="../varaussivu.jsp">Varaa aika</a></li>
-                </ul>
-            </div>  
+            <h1>MediHome</h1>        
+                 <div class="container">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="../tietokantasovellus/omasivu">Omat tiedot</a></li>
+                        <li class="active"><a href="../tietokantasovellus/varaussivu">Varaa aika</a></li>
+                    </ul>
+                </div>  
+            </div>
             <div>
                 <h4>Omat tiedot</h4>
                 <h6>Hoito-ohjeet:</h6>

@@ -1,0 +1,78 @@
+<%-- 
+    Document   : laakarinsivu
+    Created on : Dec 7, 2014, 2:15:23 PM
+    Author     : Marianne
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="fi">
+    <head>
+        <title>Lääkärin sivu</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link href="../css/bootstrap.css" rel="stylesheet">
+        <link href="../css/bootstrap-theme.css" rel="stylesheet">
+        <link href="../css/main.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    </head>
+    <body>
+
+        <div class="container">    
+            <h1>MediHome</h1>
+            <div>  
+                <h4>Aikataulu</h4>
+                <table class="table table-striped">            
+                    <thead>
+                        <tr>
+
+                            <th>Asiakkaan nimi</th>
+                            <th>Päivä</th>
+                            <th>Aika</th>
+                            <th>Osoite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tiina Tintti</td>
+                            <td>13.10.2014</td>
+                            <td>12:00</td>
+                            <td>Joutsenkuja 12</td>
+                        </tr>
+                        <tr>
+                            <td>Kimmo Elolainen</td>
+                            <td>13.10.2014</td>
+                            <td>14:00</td>
+                            <td>Hissunkissuntie 14</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>  
+            <div class="container">     
+                <form class="form-horizontal" role="form" action="laakarinsivu" method="POST">      
+                    <div class="form-group">
+                        <h4>Etsi potilas</h4>
+                        <label for="nimi" class="col-md-2 control-label">Nimi</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="nimi" name="nimi" placeholder="Nimi">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-5">
+                            <button type="submit" class="btn btn-default">Hae</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-xs btn-default"> Lisää raportti</button>
+                    <button type="submit" class="btn btn-xs btn-default"> Lisää hoito-ohjeet</button>
+                    <button type="button" class="btn btn-xs btn-default"> Potilashistoria</button>
+                    <p>Tähän tulee potilaan tietoja</p>
+                    <button type="submit" class="btn btn-xs btn-default"> Tallenna</button>
+                    <button type="submit" class="btn btn-xs btn-default"> Muokkaa</button>
+                    <button type="button" class="btn btn-xs btn-default"> Poista</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

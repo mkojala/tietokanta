@@ -1,7 +1,12 @@
+
 package Tietokanta.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Marianne
  */
-public class Varaussivu extends HttpServlet {
+public class Laakarinsivu extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,8 +31,7 @@ public class Varaussivu extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        naytaJSP("varaussivu.jsp", request, response);
-
+        naytaJSP("laakarinsivu.jsp", request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,13 +72,11 @@ public class Varaussivu extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response) 
+    throws ServletException, IOException {
 //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        RequestDispatcher dispatcher = request.getRequestDispatcher(loginjsp);
-
-        dispatcher.forward(request, response);
+     RequestDispatcher dispatcher =request.getRequestDispatcher(loginjsp);
+             
+     dispatcher.forward(request, response);
     }
-
 }

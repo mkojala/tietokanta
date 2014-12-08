@@ -24,8 +24,8 @@
             <div class="container">
                 <div>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="../omasivu.jsp">Omat tiedot</a></li>
-                        <li class="active"><a href="../varaussivu.jsp">Varaa aika</a></li>
+                        <li class="active"><a href="../tietokantasovellus/omasivu">Omat tiedot</a></li>
+                        <li class="active"><a href="../tietokantasovellus/varaussivu">Varaa aika</a></li>
                     </ul>
                 </div>  
             </div>

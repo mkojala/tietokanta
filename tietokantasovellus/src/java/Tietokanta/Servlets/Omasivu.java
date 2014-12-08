@@ -27,8 +27,8 @@ public class Omasivu extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("omasivu.jsp");
-        dispatcher.forward(request, response);
+        naytaJSP("omasivu.jsp", request, response);
+        
         
     }
 
@@ -70,5 +70,11 @@ public class Omasivu extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response) 
+    throws ServletException, IOException {
+//  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     RequestDispatcher dispatcher =request.getRequestDispatcher(loginjsp);
+     dispatcher.forward(request, response);
+    }
 
 }
