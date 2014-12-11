@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/joni/Documents/tietokantasovellus/web/index.jsp</file>
+            <file>file:/home/joni/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Omasivu.java</file>
+            <file>file:/home/joni/tietokanta/tietokantasovellus/src/java/Tietokanta/Mallit/Raportti.java</file>
+            <file>file:/home/joni/tietokanta/tietokantasovellus/src/java/Tietokanta/Mallit/Kayttaja.java</file>
+            <file>file:/home/joni/tietokanta/tietokantasovellus/web/META-INF/context.xml</file>
+            <file>file:/home/joni/tietokanta/tietokantasovellus/web/login.jsp</file>
+            <file>file:/home/joni/tietokanta/tietokantasovellus/src/java/Tietokanta/Yhteys.java</file>
+            <file>file:/home/joni/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Kirjautuminen.java</file>
         </group>
     </open-files>
 </project-private>
