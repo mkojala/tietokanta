@@ -31,9 +31,14 @@ public class Kayttaja {
         this.oikeustaso = oikeustaso;
     }
 
-    public void setId(int kayttaja_id) {
+    public int getKayttaja_id() {
+        return kayttaja_id;
+    }
+
+    public void setKayttaja_id(int kayttaja_id) {
         this.kayttaja_id = kayttaja_id;
     }
+
     public void setKayttajatunnus(String kayttajatunnus){
         this.kayttajatunnus=kayttajatunnus;
     }
@@ -49,9 +54,6 @@ public class Kayttaja {
         this.oikeustaso = oikeustaso;
     }
 
-    public int getId() {
-        return this.kayttaja_id;
-    }
     public String getKayttajatunnus(){
         return this.kayttajatunnus;
     }
@@ -80,7 +82,7 @@ public class Kayttaja {
 
                 Kayttaja kayttaja = new Kayttaja();
 
-                kayttaja.setId(tulokset.getInt("kayttaja_id"));
+                kayttaja.setKayttaja_id(tulokset.getInt("kayttaja_id"));
                 
                 kayttaja.setKayttajatunnus(tulokset.getString("kayttajatunnus"));
 
@@ -95,15 +97,15 @@ public class Kayttaja {
             kayttajat.add(new Kayttaja(111,"Anssi", "Anssi Assi", "salasana", 1));
             try {
                 tulokset.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
             try {
                 kysely.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
             try {
                 yhteys.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
         } catch (NamingException ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,7 +135,7 @@ public class Kayttaja {
     //Kutsutaan sopivat tiedot vastaanottavaa konstruktoria 
             //ja asetetaan palautettava olio:
             kirjautunut = new Kayttaja();
-            kirjautunut.setId(rs.getInt("kayttaja_id"));
+            kirjautunut.setKayttaja_id(rs.getInt("kayttaja_id"));
             kirjautunut.setNimi(rs.getString("nimi")); 
             kirjautunut.setKayttajatunnus(rs.getString("kayttajatunnus"));
             kirjautunut.setSalasana(rs.getString("salasana"));
@@ -144,18 +146,63 @@ public class Kayttaja {
         //Suljetaan kaikki resurssit:
         try {
             rs.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         try {
             kysely.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         try {
             yhteys.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
 
         //Käyttäjä palautetaan vasta täällä, kun resurssit on suljettu onnistuneesti.
         return kirjautunut;
+    }
+    public static List<Kayttaja> getLaakarit() {
+        ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
+        try {
+            String sql = "SELECT kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso from kayttaja where oikeustaso = 1";
+
+            Connection yhteys = Yhteys.getYhteys();
+            PreparedStatement kysely = yhteys.prepareStatement(sql);
+            ResultSet tulokset = kysely.executeQuery();
+
+            while (tulokset.next()) {
+
+                Kayttaja kayttaja = new Kayttaja();
+
+                kayttaja.setKayttaja_id(tulokset.getInt("kayttaja_id"));
+                
+                kayttaja.setKayttajatunnus(tulokset.getString("kayttajatunnus"));
+
+                kayttaja.setNimi(tulokset.getString("nimi"));
+
+                kayttaja.setSalasana(tulokset.getString("salasana"));
+                
+                kayttaja.setOikeustaso(tulokset.getInt("oikeustaso"));
+
+                kayttajat.add(kayttaja);
+            }
+            try {
+                tulokset.close();
+            } catch (SQLException e) {
+            }
+            try {
+                kysely.close();
+            } catch (SQLException e) {
+            }
+            try {
+                yhteys.close();
+            } catch (SQLException e) {
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kayttajat;
+
     }
 }

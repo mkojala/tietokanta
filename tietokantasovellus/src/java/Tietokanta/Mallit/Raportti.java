@@ -86,15 +86,15 @@ public class Raportti {
             }
             try {
                 tulokset.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
             try {   
                 kysely.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
             try {
                 yhteys.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
         } catch (NamingException ex) {
             Logger.getLogger(Raportti.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,15 +127,15 @@ public class Raportti {
             }
             try {
                 tulokset.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
             try {   
                 kysely.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
             try {
                 yhteys.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
         } catch (NamingException ex) {
             Logger.getLogger(Raportti.class.getName()).log(Level.SEVERE, null, ex);

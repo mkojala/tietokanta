@@ -37,7 +37,7 @@ public class Omasivu extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-        List<Raportti> raportit = Raportti.getAsiakkaanRaportit(kirjautunut.getId());
+        List<Raportti> raportit = Raportti.getAsiakkaanRaportit(kirjautunut.getKayttaja_id());
         request.setAttribute("raportit", raportit);
 
 //        for (Raportti r : raportit) {

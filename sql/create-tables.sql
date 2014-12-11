@@ -22,8 +22,8 @@ CREATE TABLE "varaus"
 varaus_id int PRIMARY KEY,
 asiakas_id int NOT NULL references asiakkaat on delete cascade on update cascade,
 laakari_id int NOT NULL references laakarit on delete cascade on update cascade,
-paiva date NOT NULL,
-kellonaika time NOT NULL,
+osoite character varying(50) NOT NULL,
+paiva timestamp NOT NULL,
 oireet character varying(120) NOT NULL
 );
 

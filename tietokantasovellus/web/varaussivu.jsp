@@ -31,18 +31,48 @@
             </div>
 
             <div> <h3>Varaussivu</h3>
-                <h4>Valitse päivä</h4>
-                <p>Tähän tulee kalenteri</p>
+                
             </div>
             <div>  
-                <h4>Vapaat lääkärit</h4>
+                <h4>Valitse lääkäri</h4>
+                <form class="form-horizontal" role="form" action="varaussivu.jsp" method="GET">
+                <select>
+                    <c:forEach var="laakari" items="${laakarit}"> 
+                        <option value="${laakari.kayttaja_id}" name="id">${laakari.nimi}</option>
+                </c:forEach> 
+            </select>
+                    <button type="submit">"Hae vapaat ajat"</button>
+                    </form>
+                
+                
                 <table class="table table-striped">            
                     <thead>
                         <tr>
 
-                            <th>Lääkärin nimi</th>
-                            <th>Aika</th>
+                            <th>klo</th>
+                            <th>ma</th>
+                            <th>ti</th>
+                            <th>ke</th>
+                            <th>to</th>
+                            <th>pe</th>                                                  
                         </tr>
+                        <tr>
+                            <td>08:00</td>
+                            <td class=""></td>
+                            <td class=""></td>
+                            <td class=""></td>
+                            <td class=""></td>
+                            <td class=""></td>
+                        </tr>
+                        <tr><td>10:00</td>
+                            <td class=""></td>
+                            <td class=""></td>
+                            <td class=""></td>
+                            <td class=""></td>
+                            <td class=""></td>
+                            
+                            
+                            </tr>
                     </thead>
                     <tbody>
                         <tr>

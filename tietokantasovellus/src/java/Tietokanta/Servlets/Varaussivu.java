@@ -1,8 +1,10 @@
 package Tietokanta.Servlets;
 
 import Tietokanta.Mallit.Kayttaja;
+import Tietokanta.Mallit.Varaus;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,12 +30,22 @@ public class Varaussivu extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        int laakari = 0;
+        try {  
+            laakari = Integer.parseInt(request.getParameter("id"));
+        } catch (NumberFormatException e) {
+        }
 
         Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
         if (kirjautunut == null) {
             response.sendRedirect("login");
             return;
         }
+        List<Kayttaja> laakarit = Kayttaja.getLaakarit();
+        request.setAttribute("laakarit", laakarit);
+        List<Varaus> varaukset = Varaus.getLaakarinVaraukset(laakari);
+        request.setAttribute("varaukset", varaukset);
+
         response.setContentType("text/html;charset=UTF-8");
         naytaJSP("varaussivu.jsp", request, response);
 
