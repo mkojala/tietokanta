@@ -35,13 +35,13 @@
             </div>
             <div>  
                 <h4>Valitse lääkäri</h4>
-                <form class="form-horizontal" role="form" action="varaussivu.jsp" method="GET">
+                <form class="form-horizontal" role="form" action="varaussivu" method="GET">
                 <select>
                     <c:forEach var="laakari" items="${laakarit}"> 
                         <option value="${laakari.kayttaja_id}" name="id">${laakari.nimi}</option>
                 </c:forEach> 
             </select>
-                    <button type="submit">"Hae vapaat ajat"</button>
+                    <button type="submit">Hae vapaat ajat</button>
                     </form>
                 
                 
