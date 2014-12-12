@@ -6,11 +6,13 @@
 package Tietokanta.Mallit;
 
 import Tietokanta.Yhteys;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,11 +29,12 @@ public class Varaus {
     private int asiakas_id;
     private int laakari_id;
     private Date paiva;
+    private Time aika;
     private String osoite;
     private String oireet;
 
     public Varaus() {
-
+        
     }
 
     public Varaus(int varaus_id, int asiakas_id, int laakari_id, Date paiva, String osoite, String oireet) {
@@ -41,6 +44,14 @@ public class Varaus {
         this.paiva = paiva;
         this.osoite = osoite;
         this.oireet = oireet;
+    }
+
+    public Time getAika() {
+        return aika;
+    }
+
+    public void setAika(Time aika) {
+        this.aika = aika;
     }
 
     public int getVaraus_id() {
@@ -105,7 +116,7 @@ public class Varaus {
                 Varaus varaus = new Varaus();
                 varaus.setVaraus_id(tulokset.getInt("varaus_id"));
                 varaus.setAsiakas_id(tulokset.getInt("asiakas_id"));
-                varaus.setLaakari_id(tulokset.getInt("varaus_id"));
+                varaus.setLaakari_id(tulokset.getInt("laakari_id"));
                 varaus.setPaiva(tulokset.getDate("paiva"));
                 varaus.setOsoite(tulokset.getString("osoite"));
                 varaus.setOireet(tulokset.getString("oireet"));
@@ -132,7 +143,50 @@ public class Varaus {
         return varaukset;
 
     }
+public static List<Varaus> getKaikkiVaraukset(Date pvm) {
+        ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
+        try {
+            String sql = "SELECT varaus_id, asiakas_id, laakari_id, paiva, osoite, oireet FROM varaus WHERE cast(paiva as date)=cast(? as date);";
+            Connection yhteys = Yhteys.getYhteys();
+            PreparedStatement kysely = yhteys.prepareStatement(sql);
+            kysely.setDate(1, (java.sql.Date) pvm);
+            ResultSet tulokset = kysely.executeQuery();
 
+            
+            while (tulokset.next()) {
+
+                Varaus varaus = new Varaus();
+                varaus.setVaraus_id(tulokset.getInt("varaus_id"));
+                varaus.setAsiakas_id(tulokset.getInt("asiakas_id"));
+                varaus.setLaakari_id(tulokset.getInt("laakari_id"));
+                varaus.setPaiva(tulokset.getDate("paiva"));
+                varaus.setAika(tulokset.getTime("paiva"));
+                varaus.setOsoite(tulokset.getString("osoite"));
+                varaus.setOireet(tulokset.getString("oireet"));
+                varaukset.add(varaus);
+
+            }
+            try {
+                tulokset.close();
+            } catch (SQLException e) {
+            }
+            try {
+                kysely.close();
+            } catch (SQLException e) {
+            }
+            try {
+                yhteys.close();
+            } catch (SQLException e) {
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Raportti.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Raportti.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        return varaukset;
+
+    }
     public static List<Varaus> getLaakarinVaraukset(int laakari_id) {
         ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
         try {
@@ -147,7 +201,7 @@ public class Varaus {
                 Varaus varaus = new Varaus();
                 varaus.setVaraus_id(tulokset.getInt("varaus_id"));
                 varaus.setAsiakas_id(tulokset.getInt("asiakas_id"));
-                varaus.setLaakari_id(tulokset.getInt("varaus_id"));
+                varaus.setLaakari_id(tulokset.getInt("laakari_id"));
                 varaus.setPaiva(tulokset.getDate("paiva"));
                 varaus.setOsoite(tulokset.getString("osoite"));
                 varaus.setOireet(tulokset.getString("oireet"));
@@ -189,7 +243,7 @@ public class Varaus {
                 Varaus varaus = new Varaus();
                 varaus.setVaraus_id(tulokset.getInt("varaus_id"));
                 varaus.setAsiakas_id(tulokset.getInt("asiakas_id"));
-                varaus.setLaakari_id(tulokset.getInt("varaus_id"));
+                varaus.setLaakari_id(tulokset.getInt("laakari_id"));
                 varaus.setPaiva(tulokset.getDate("paiva"));
                 varaus.setOsoite(tulokset.getString("osoite"));
                 varaus.setOireet(tulokset.getString("oireet"));
@@ -230,7 +284,7 @@ public class Varaus {
                 Varaus varaus = new Varaus();
                 varaus.setVaraus_id(tulokset.getInt("varaus_id"));
                 varaus.setAsiakas_id(tulokset.getInt("asiakas_id"));
-                varaus.setLaakari_id(tulokset.getInt("varaus_id"));
+                varaus.setLaakari_id(tulokset.getInt("laakari_id"));
                 varaus.setPaiva(tulokset.getDate("paiva"));
                 varaus.setOsoite(tulokset.getString("osoite"));
                 varaus.setOireet(tulokset.getString("oireet"));

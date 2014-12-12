@@ -31,50 +31,35 @@
             </div>
 
             <div> <h3>Varaussivu</h3>
-                
+                <h4>Valitse päivä</h4>
+                <form action="varaussivu" method="GET">
+                    <input type="date" class="form-control" id="valitsePvm" name="pvm">
+                    <div>
+                        <button type="submit" class="btn btn-default">Hae</button>
+                    </div>
+                </form>
+
             </div>
             <div>  
-                <h4>Valitse lääkäri</h4>
-                <form class="form-horizontal" role="form" action="varaussivu" method="GET">
-                <select>
-                    <c:forEach var="laakari" items="${laakarit}"> 
-                        <option value="${laakari.kayttaja_id}" name="id">${laakari.nimi}</option>
-                </c:forEach> 
-            </select>
-                    <button type="submit">Hae vapaat ajat</button>
-                    </form>
-                
-                
+                <h4>Vapaat lääkärit</h4>
                 <table class="table table-striped">            
                     <thead>
                         <tr>
 
-                            <th>klo</th>
-                            <th>ma</th>
-                            <th>ti</th>
-                            <th>ke</th>
-                            <th>to</th>
-                            <th>pe</th>                                                  
+                            <th>Lääkärin nimi</th>
+                            <th>Aika</th>
                         </tr>
-                        <tr>
-                            <td>08:00</td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                        </tr>
-                        <tr><td>10:00</td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            
-                            
-                            </tr>
                     </thead>
                     <tbody>
+
+                        <c:forEach var="varaus" items="${varaukset}">  
+                            <tr>
+                                <td><c:out value="${varaus.laakari_id}"/></td>
+                                <td><c:out value="${varaus.aika}"/> </td>
+                            </tr>
+                        </c:forEach> 
+
+
                         <tr>
                             <td>Lasse Lääkäri</td>
                             <td>12:00</td>
@@ -87,7 +72,7 @@
                 </table>
             </div>
             <div class="container">
-                <form class="form-horizontal" role="form" action="varaussivu.html" method="POST">
+                <form class="form-horizontal" role="form" action="varaussivu" method="POST">
                     <div class="form-group">
                         <label for="annaOireet" class="col-md-2 control-label">Oireeni:</label>
                         <div class="col-md-10">
