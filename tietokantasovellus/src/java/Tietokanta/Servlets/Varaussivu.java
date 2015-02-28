@@ -4,12 +4,17 @@ import Tietokanta.Mallit.Kayttaja;
 import Tietokanta.Mallit.Varaus;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
+import java.util.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,40 +36,55 @@ public class Varaussivu extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.text.ParseException
+     * @throws java.sql.SQLException
+     * @throws javax.naming.NamingException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-//        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
-//        if (kirjautunut == null) {
-//            response.sendRedirect("login");
-//            return;
-//        }
-        
+            throws ServletException, IOException, ParseException, SQLException, NamingException {
 //        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        //      DateFormat format = new SimpleDateFormat("yyyy-M-dd");
+        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
         
-        Date pvm;
-        DateFormat format = new SimpleDateFormat("yyyy-M-dd");
+        
+        if (kirjautunut == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        
+        request.setAttribute("kayttaja", kirjautunut.getNimi());
+        
+        List<Kayttaja> laakarit = Kayttaja.getLaakarit();
+        request.setAttribute("laakarit", laakarit);
+        
+        int asiakas_id = kirjautunut.getKayttaja_id();
+       String pvm = request.getParameter("pvm");
+        String oireet = request.getParameter("oireet");
+        
+        if (request.getParameter("laakari") != null) {
+            int laakari_id = Integer.parseInt(request.getParameter("laakari"));
+            Varaus varaus = new Varaus();
+            varaus.varaa(asiakas_id, laakari_id, pvm, oireet);
+            response.sendRedirect("varaussivu");
+        }
+             //       Date pvm;
+        //     pvm = format.parse(request.getParameter("pvm"));
 
-        List<Varaus> varaukset = new ArrayList<Varaus>();
-
-        try {
-            pvm = format.parse(request.getParameter("pvm"));
+        //   List<Varaus> varaukset = new ArrayList<Varaus>();
+        //   response.sendRedirect("varaussivu");
+        //      try {
+        //        Date pvm = format.parse(request.getParameter("pvm"));
 //            out.println("moikka moi");
 //            out.println(pvm.getTime());
-            varaukset = Varaus.getKaikkiVaraukset(new java.sql.Date(pvm.getTime()));
-
-        } catch (Exception e) {
-        }
-        request.setAttribute("varaukset", varaukset);
-
+        //       varaukset = Varaus.getKaikkiVaraukset(new java.sql.Date(pvm.getTime()));
+        //     } catch (Exception e) {
+        //     }
+        //    request.setAttribute("varaukset", varaukset);
 //        out.println(varaukset.size());
         
-//        List<Kayttaja> laakarit = Kayttaja.getLaakarit();
-//        request.setAttribute("laakarit", laakarit);
-        //List<Varaus> varaukset = Varaus.getLaakarinVaraukset(laakari);
-        // request.setAttribute("varaukset", varaukset);
-        
+   //     List<Varaus> varaukset = Varaus.getLaakarinVaraukset(laakari);
+        //    request.setAttribute("varaukset", varaukset);
         response.setContentType("text/html;charset=UTF-8");
         naytaJSP("varaussivu.jsp", request, response);
 
@@ -82,7 +102,17 @@ public class Varaussivu extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            try {
+                processRequest(request, response);
+            } catch (ParseException ex) {
+                Logger.getLogger(Varaussivu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -96,7 +126,17 @@ public class Varaussivu extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            try {
+                processRequest(request, response);
+            } catch (ParseException ex) {
+                Logger.getLogger(Varaussivu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

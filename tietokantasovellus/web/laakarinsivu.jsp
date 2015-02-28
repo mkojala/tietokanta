@@ -28,26 +28,18 @@
                 <table class="table table-striped">            
                     <thead>
                         <tr>
-
-                            <th>Asiakkaan nimi</th>
-                            <th>Päivä</th>
-                            <th>Aika</th>
+                            <th>Nimi</th>
                             <th>Osoite</th>
+                            <th>Päivä</th>
+                            <th>Oireet</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Tiina Tintti</td>
-                            <td>13.10.2014</td>
-                            <td>12:00</td>
-                            <td>Joutsenkuja 12</td>
-                        </tr>
-                        <tr>
-                            <td>Kimmo Elolainen</td>
-                            <td>13.10.2014</td>
-                            <td>14:00</td>
-                            <td>Hissunkissuntie 14</td>
-                        </tr>
+                    <tbody><tr>
+                        <c:forEach var="varaus" items="${varaukset}"> 
+                    <td /><c:out value="${varaus.paiva}"/> 
+                    <td /><c:out value="${varaus.oireet}"/>          
+                </c:forEach> 
+                    </tr>
                     </tbody>
                 </table>
             </div>  

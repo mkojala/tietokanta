@@ -21,6 +21,7 @@
     <body>
         <div class="container">
             <h1>MediHome</h1>
+            <p>Käyttäjä: ${kayttaja}</p>
             <div class="container">
                 <div>
                     <ul class="nav nav-tabs">
@@ -31,43 +32,43 @@
             </div>
 
             <div> <h3>Varaussivu</h3>
+                <form action="varaussivu" method="POST">
+                <h4>Valitse lääkäri</h4>
+                <select name="laakari">
+                <c:forEach var="laakari" items="${laakarit}">
+                    <option value="${laakari.kayttaja_id}"><c:out value="${laakari.nimi}"/></option>
+                </c:forEach>
+                    </select>
                 <h4>Valitse päivä</h4>
-                <form action="varaussivu" method="GET">
-                    <input type="date" class="form-control" id="valitsePvm" name="pvm">
+                
+                <input type="text" class="form-control" id="valitsePvm" name="pvm" placeholder="yyyy-mm-dd">
+                    <div class="form-group">
+                        <label for="annaOireet" class="col-md-2 control-label">Oireeni:</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="annaOireet" name="oireet" placeholder="Oireeni">
+                        </div>
+                    </div>
                     <div>
-                        <button type="submit" class="btn btn-default">Hae</button>
+                        <button type="submit" class="btn btn-default">Varaa</button>
                     </div>
                 </form>
-
-            </div>
-            <div>  
+ 
+<!--            <div>  
                 <h4>Vapaat lääkärit</h4>
                 <table class="table table-striped">            
                     <thead>
                         <tr>
-
                             <th>Lääkärin nimi</th>
                             <th>Aika</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         <c:forEach var="varaus" items="${varaukset}">  
                             <tr>
                                 <td><c:out value="${varaus.laakari_id}"/></td>
                                 <td><c:out value="${varaus.aika}"/> </td>
                             </tr>
                         </c:forEach> 
-
-
-                        <tr>
-                            <td>Lasse Lääkäri</td>
-                            <td>12:00</td>
-                        </tr>
-                        <tr>
-                            <td>Ossi Ortopedi</td>
-                            <td>14:00</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -84,7 +85,7 @@
                             <button type="submit" class="btn btn-default">Varaa</button>
                         </div>
                     </div>
-                </form>
+                </form>-->
             </div>
         </div>
 </html>

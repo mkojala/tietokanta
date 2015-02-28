@@ -1,12 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Tietokanta.Servlets;
 
+
 import Tietokanta.Mallit.Kayttaja;
-import Tietokanta.Mallit.Raportti;
-import Tietokanta.Mallit.Varaus;
+import static Tietokanta.Mallit.Kayttaja.etsiKayttajaTunnuksilla;
+import Tietokanta.Yhteys;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -19,9 +27,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Marianne
+ * @author mkojala
  */
-public class Laakarinsivu extends HttpServlet {
+public class Rekisteroityminen extends HttpServlet {
+   
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,10 +40,24 @@ public class Laakarinsivu extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
+     * @throws javax.naming.NamingException
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, NamingException {     
+        String salasana = request.getParameter("salasana");
+        String nimi = request.getParameter("nimi");
+        String kayttajatunnus = request.getParameter("ktunnus");
+        String osoite = request.getParameter("osoite");  
+         
+         Kayttaja kayttaja = new Kayttaja();              
+         kayttaja.tallenna(kayttajatunnus, nimi, salasana, osoite, 2);
+        
+       
+            response.sendRedirect("login");
+ 
+             
+           
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,20 +72,13 @@ public class Laakarinsivu extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-                        HttpSession session = request.getSession();
-
-        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
-        if (kirjautunut == null) {
-            response.sendRedirect("login");
-            return;
-        }
-        request.setAttribute("kayttaja", kirjautunut.getNimi());
-        List<Varaus> varaukset = Varaus.getLaakarinVaraukset(kirjautunut.getKayttaja_id());
-        request.setAttribute("varaukset", varaukset);
-
-        response.setContentType("text/html;charset=UTF-8");
-        naytaJSP("laakarinsivu.jsp", request, response);
+             try {
+                 processRequest(request, response);
+             } catch (SQLException ex) {
+                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (NamingException ex) {
+                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+             }
     }
 
     /**
@@ -76,7 +92,13 @@ public class Laakarinsivu extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+             try {
+                 processRequest(request, response);
+             } catch (SQLException ex) {
+                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (NamingException ex) {
+                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+             }
     }
 
     /**
@@ -88,12 +110,15 @@ public class Laakarinsivu extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response)
+private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         RequestDispatcher dispatcher = request.getRequestDispatcher(loginjsp);
 
         dispatcher.forward(request, response);
     }
+public void asetaVirhe(String viesti, HttpServletRequest request) {
+        request.setAttribute("viesti", viesti);
+    }
+
 }

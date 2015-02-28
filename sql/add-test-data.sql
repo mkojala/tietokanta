@@ -10,21 +10,19 @@ INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
 INSERT INTO kayttaja (kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso)
     VALUES (4, 'ossi','Ossi Ortopedi', 'jalka', 1);
 
-INSERT INTO laakarit 
-(laakari_id)
-select kayttaja_id from kayttaja where oikeustaso = 1;
+INSERT INTO laakarit (laakari_id, nimi)
+select kayttaja_id, nimi from kayttaja where oikeustaso = 1;
 
-INSERT INTO asiakkaat 
-(asiakas_id)
-select kayttaja_id  from kayttaja where oikeustaso = 2;
+INSERT INTO asiakkaat (asiakas_id, nimi, osoite)
+select kayttaja_id, nimi, 'Kissakuja 1'  from kayttaja where oikeustaso = 2;
 
 INSERT INTO varaus 
-(varaus_id, asiakas_id, laakari_id, osoite, paiva, oireet)
-    VALUES (1, 1, 3, 'Hermannintie 7, 02870 Espoo', '2014-10-12 10:00:00', 'Selkäsärky');
+(varaus_id, asiakas_id, laakari_id, paiva, oireet)
+    VALUES (1, 1, 3, '2014-10-12 10:00:00', 'Selkäsärky');
 
 INSERT INTO varaus 
-(varaus_id, asiakas_id, laakari_id, osoite, paiva, oireet)
-    VALUES (2, 2, 4, 'Kissakuja 3, 00100 Helsinki','2014-10-12 08:00:00', 'Kurkkukipu');
+(varaus_id, asiakas_id, laakari_id, paiva, oireet)
+    VALUES (2, 2, 4,'2014-10-12 08:00:00', 'Kurkkukipu');
 
 INSERT INTO raportti (raportti_id, varaus_id, asiakas_id, potilasraportti, hoito_ohjeet)
     VALUES (1, 1, 1, 'Selän särky rasituksesta johtuvaa.', 'Lepoa ja nesteytystä');

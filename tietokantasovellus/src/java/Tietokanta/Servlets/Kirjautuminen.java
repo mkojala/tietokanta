@@ -29,12 +29,12 @@ public class Kirjautuminen extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, NamingException, SQLException {
         String salasana = request.getParameter("password");
         String kayttaja = request.getParameter("username");
-        System.out.println("kirjautuminen");
+   
         HttpSession session = request.getSession();
-//        Kayttaja kirjautuja = new Kayttaja();
-//        kirjautuja.setKayttajatunnus(kayttaja);
-//        kirjautuja.setSalasana(salasana);
-        //  kirjautuja = Kayttaja.etsiKayttajaTunnuksilla(kayttaja, salasana);
+       // Kayttaja kirjautuja = new Kayttaja();
+     //   kirjautuja.setKayttajatunnus(kayttaja);
+      //  kirjautuja.setSalasana(salasana);
+        // kirjautuja = Kayttaja.etsiKayttajaTunnuksilla(kayttaja, salasana);
 
         /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
         /* Jos kummatkin parametrit ovat null, käyttäjä ei ole edes yrittänyt vielä kirjautua.
@@ -56,7 +56,6 @@ public class Kirjautuminen extends HttpServlet {
             naytaJSP("login.jsp", request, response);
             return;
         }
-
         Kayttaja k = Kayttaja.etsiKayttajaTunnuksilla(kayttaja, salasana);
 
         if (k != null) {
@@ -79,6 +78,7 @@ public class Kirjautuminen extends HttpServlet {
             //  RequestDispatcher dispatcher =request.getRequestDispatcher("login.jsp");
             //dispatcher.forward(request, response);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

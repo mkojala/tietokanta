@@ -48,17 +48,29 @@
 
         <div class="container">
             <h4>Uusi asiakas? Rekisteröidy</h4>
-            <form class="form-horizontal" role="form" action="login" method="POST">
+            <form class="form-horizontal" role="form" action="rekisteroityminen" method="POST">
                 <div class="form-group">
                     <label for="annaNimi" class="col-md-2 control-label">Nimi</label>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="annaNimi" name="Nimi" placeholder="Nimi">
+                        <input type="text" class="form-control" id="annaNimi" name="nimi" placeholder="Nimi">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="annaKtunnus" class="col-md-2 control-label">Käyttäjätunnus</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="annaNimi" name="ktunnus" value="${kayttaja}" placeholder="Käyttäjätunnus">
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <label for="annaOsoite" class="col-md-2 control-label">Osoite</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="annaNimi" name="osoite" placeholder="Osoite">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="annaSalasana2" class="col-md-2 control-label">Salasana</label>
                     <div class="col-md-5">
-                        <input type="password" class="form-control" id="annaSalasana2" name="Salasana" placeholder="Salasana">
+                        <input type="password" class="form-control" id="annaSalasana2" name="salasana" placeholder="Salasana">
                     </div>
                 </div>
                 <div class="form-group">

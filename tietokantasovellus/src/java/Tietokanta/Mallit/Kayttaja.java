@@ -16,6 +16,7 @@ public class Kayttaja {
     private int kayttaja_id;
     private String kayttajatunnus;
     private String nimi;
+    private String osoite;
     private String salasana;
     private int oikeustaso;
 
@@ -23,12 +24,21 @@ public class Kayttaja {
         
     }
 
-    public Kayttaja(int kayttaja_id, String kayttajatunnus, String nimi, String salasana, int oikeustaso) {
+    public Kayttaja(int kayttaja_id, String kayttajatunnus, String nimi, String osoite, String salasana, int oikeustaso) {
         this.kayttaja_id = kayttaja_id;
         this.kayttajatunnus = kayttajatunnus;
         this.nimi = nimi;
+        this.osoite = osoite;
         this.salasana = salasana;
         this.oikeustaso = oikeustaso;
+    }
+
+    public void setOsoite(String osoite) {
+        this.osoite = osoite;
+    }
+
+    public String getOsoite() {
+        return osoite;
     }
 
     public int getKayttaja_id() {
@@ -72,7 +82,7 @@ public class Kayttaja {
     public static List<Kayttaja> getKayttajat() {
         ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
         try {
-            String sql = "SELECT kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso from kayttaja";
+            String sql = "SELECT kayttaja_id, kayttajatunnus, nimi, osoite, salasana, oikeustaso from kayttaja";
 
             Connection yhteys = Yhteys.getYhteys();
             PreparedStatement kysely = yhteys.prepareStatement(sql);
@@ -87,6 +97,8 @@ public class Kayttaja {
                 kayttaja.setKayttajatunnus(tulokset.getString("kayttajatunnus"));
 
                 kayttaja.setNimi(tulokset.getString("nimi"));
+                
+                kayttaja.setOsoite(tulokset.getString("osoite"));
 
                 kayttaja.setSalasana(tulokset.getString("salasana"));
                 
@@ -94,7 +106,6 @@ public class Kayttaja {
 
                 kayttajat.add(kayttaja);
             }
-            kayttajat.add(new Kayttaja(111,"Anssi", "Anssi Assi", "salasana", 1));
             try {
                 tulokset.close();
             } catch (SQLException e) {
@@ -115,6 +126,28 @@ public class Kayttaja {
         return kayttajat;
 
     }
+        
+    public void tallenna(String kayttajatunnus, String nimi, String osoite, String salasana, int oikeustaso) throws SQLException, NamingException{
+        String sql = "INSERT INTO kayttaja (kayttajatunnus, nimi, osoite, salasana, oikeustaso) VALUES(?, ?, ?, ?, ?)";
+        Connection yhteys = Yhteys.getYhteys();
+            PreparedStatement kysely = yhteys.prepareStatement(sql);
+             kysely.setString(1, kayttajatunnus);
+             kysely.setString(2, nimi);
+             kysely.setString(3, osoite);
+             kysely.setString(4, salasana);
+             kysely.setInt(5, oikeustaso);
+            ResultSet tulokset = kysely.executeQuery();
+            
+            
+     
+                kysely.close();
+      
+                tulokset.close();
+          
+                yhteys.close();
+            
+    }
+
     public static Kayttaja etsiKayttajaTunnuksilla(String kayttaja, String salasana) throws NamingException, SQLException {
         String sql = "SELECT kayttaja_id, nimi, kayttajatunnus, salasana, oikeustaso FROM kayttaja where kayttajatunnus = ? AND salasana = ?";
         Connection yhteys = Yhteys.getYhteys();
@@ -141,6 +174,7 @@ public class Kayttaja {
             kirjautunut.setSalasana(rs.getString("salasana"));
             kirjautunut.setOikeustaso(rs.getInt("oikeustaso"));
         }
+        
 
   //Jos kysely ei tuottanut tuloksia käyttäjä on nyt vielä null.
         //Suljetaan kaikki resurssit:
@@ -205,4 +239,40 @@ public class Kayttaja {
         return kayttajat;
 
     }
+    public static Kayttaja etsiLaakarinkayttajat() throws NamingException, SQLException {
+        String sql = "SELECT nimi, osoite FROM kayttaja";
+        Connection yhteys = Yhteys.getYhteys();
+        PreparedStatement kysely = yhteys.prepareStatement(sql);
+        ResultSet rs = kysely.executeQuery();
+
+        //Alustetaan muuttuja, joka sisältää löydetyn käyttäjän
+        Kayttaja asiakas = null;
+
+        if (rs.next()) {
+    //Kutsutaan sopivat tiedot vastaanottavaa konstruktoria 
+            //ja asetetaan palautettava olio:
+            asiakas = new Kayttaja();
+            asiakas.setNimi(rs.getString("nimi")); 
+            asiakas.setKayttajatunnus(rs.getString("osoite"));
+        }
+        
+
+  //Jos kysely ei tuottanut tuloksia käyttäjä on nyt vielä null.
+        //Suljetaan kaikki resurssit:
+        try {
+            rs.close();
+        } catch (SQLException e) {
+        }
+        try {
+            kysely.close();
+        } catch (SQLException e) {
+        }
+        try {
+            yhteys.close();
+        } catch (SQLException e) {
+        }
+
+        //Käyttäjä palautetaan vasta täällä, kun resurssit on suljettu onnistuneesti.
+        return asiakas;
+}
 }

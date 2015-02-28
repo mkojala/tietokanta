@@ -30,22 +30,13 @@ public class Omasivu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-
-        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
-        if (kirjautunut == null) {
-            response.sendRedirect("login");
-            return;
-        }
-        List<Raportti> raportit = Raportti.getAsiakkaanRaportit(kirjautunut.getKayttaja_id());
-        request.setAttribute("raportit", raportit);
+  
 
 //        for (Raportti r : raportit) {
 //        out.println(r.getOhjeet());
 //        out.println(r.getRaportti());
 //        }
-        response.setContentType("text/html;charset=UTF-8");
-        naytaJSP("omasivu.jsp", request, response);
+
 
     }
 
@@ -62,6 +53,19 @@ public class Omasivu extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+         HttpSession session = request.getSession();
+         Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
+        if (kirjautunut == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        request.setAttribute("kayttaja", kirjautunut.getNimi());
+        
+         List<Raportti> raportit = Raportti.getAsiakkaanRaportit(kirjautunut.getKayttaja_id());
+        request.setAttribute("raportit", raportit);
+        
+                response.setContentType("text/html;charset=UTF-8");
+        naytaJSP("omasivu.jsp", request, response);
     }
 
     /**

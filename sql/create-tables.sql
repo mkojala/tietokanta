@@ -9,20 +9,24 @@ oikeustaso int NOT NULL
 
 CREATE TABLE "laakarit"
 (
-laakari_id int PRIMARY KEY references kayttaja on delete cascade
+laakari_id int PRIMARY KEY references kayttaja on delete cascade,
+nimi character varying(30)
 );
+
 
 CREATE TABLE "asiakkaat"
 (
-asiakas_id int PRIMARY KEY references kayttaja on delete cascade
+asiakas_id int PRIMARY KEY references kayttaja on delete cascade,
+nimi character varying(30),
+osoite character varying(50) NOT NULL
 );
+
 
 CREATE TABLE "varaus"
 (
 varaus_id int PRIMARY KEY,
 asiakas_id int NOT NULL references asiakkaat on delete cascade on update cascade,
 laakari_id int NOT NULL references laakarit on delete cascade on update cascade,
-osoite character varying(50) NOT NULL,
 paiva timestamp NOT NULL,
 oireet character varying(120) NOT NULL
 );

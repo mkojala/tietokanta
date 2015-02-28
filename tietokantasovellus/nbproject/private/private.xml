@@ -3,18 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Servlet.java</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/web/varaussivu.jsp</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Laakarinsivu.java</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/web/login.jsp</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/web/html-demo/varaussivu.html</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/web/omasivu.jsp</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/NewServlet.java</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Kirjautuminen.java</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Mallit/Kayttaja.java</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Omasivu.java</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Varaussivu.java</file>
-            <file>file:/home/mkojala/tietokanta/tietokanta/tietokantasovellus/src/java/Tietokanta/Mallit/Varaus.java</file>
+            <file>file:/home/mkojala/tietokanta/tietokantasovellus/src/java/Tietokanta/Servlets/Varaussivu.java</file>
+            <file>file:/home/mkojala/tietokanta/tietokantasovellus/src/java/Tietokanta/Mallit/Varaus.java</file>
+            <file>file:/home/mkojala/tietokanta/tietokantasovellus/src/java/Tietokanta/Mallit/Date.java</file>
+            <file>file:/home/mkojala/tietokanta/tietokantasovellus/web/varaussivu.jsp</file>
         </group>
     </open-files>
 </project-private>

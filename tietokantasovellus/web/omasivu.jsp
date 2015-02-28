@@ -20,7 +20,8 @@
     </head>
     <body>     
         <div class="container">
-            <h1>MediHome</h1>        
+            <h1>MediHome</h1>
+            <p>Käyttäjä: ${kayttaja}</p>
             <div class="container">
                 <div>
                     <ul class="nav nav-tabs">
@@ -33,8 +34,8 @@
                 <h4>Omat tiedot</h4>
                 <h4>Potilashistoria:</h4>
                 <c:forEach var="raportti" items="${raportit}"> 
-                    <br /><c:out value="${raportti.raportti}"/> 
-                    <br /><c:out value="${raportti.ohjeet}"/>
+                    <br /><c:out value="${raportti.potilasraportti}"/> 
+                    <br /><c:out value="${raportti.hoito_ohjeet}"/>
                 </c:forEach> 
             </div>
         </div>
