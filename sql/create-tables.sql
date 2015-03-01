@@ -21,11 +21,10 @@ oireet character varying(120)
 CREATE TABLE raportti
 (
   raportti_id SERIAL PRIMARY KEY,
-  varaus_id int NOT NULL references varaus on delete cascade on update cascade,
   asiakas_id int NOT NULL references kayttaja on delete cascade on update cascade,
   laakari_id int NOT NULL references kayttaja on delete cascade on update cascade,
-  potilasraportti character varying(500) NOT NULL,
-  hoito_ohjeet character varying(500) NULL
+  potilasraportti character varying(500),
+  hoito_ohjeet character varying(500)
 );
 
 

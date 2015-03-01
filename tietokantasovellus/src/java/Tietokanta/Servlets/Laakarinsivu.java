@@ -36,8 +36,55 @@ public class Laakarinsivu extends HttpServlet {
      * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
-       
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
+        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
+        if (kirjautunut == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        request.setAttribute("kayttaja", kirjautunut.getNimi());
+
+        List<Varaustiedot> varaukset = Varaustiedot.getVaraustiedot(kirjautunut.getKayttaja_id());
+        //  List<Varaus> varaukset = Varaus.getLaakarinVaraukset(kirjautunut.getKayttaja_id());
+        request.setAttribute("varaukset", varaukset);
+        List<Kayttaja> asiakkaat = Kayttaja.getAsiakkaat();
+        request.setAttribute("asiakkaat", asiakkaat);
+        int laakari_id = kirjautunut.getKayttaja_id();
+        String potilasraportti = request.getParameter("raportti");
+        String hoito_ohje = request.getParameter("hoito_ohje");
+
+        if (request.getParameter("asiakas") != null) {
+            int asiakas_id = Integer.parseInt(request.getParameter("asiakas"));
+            List<Raportti> raportit = Raportti.getAsiakkaanRaportit(asiakas_id);
+            request.setAttribute("raportit", raportit);
+            Raportti rap = new Raportti();
+            try {
+                rap.tallennaRaportti(asiakas_id, laakari_id, potilasraportti, hoito_ohje);
+                response.sendRedirect("laakarinsivu");
+            } catch (SQLException ex) {
+                Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NamingException ex) {
+                Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+//    try {
+//         List<Kayttaja> nimiosoite = Kayttaja.etsiLaakarinkayttajat(asiakas_id);
+//         request.setAttribute("asiakkaat", nimiosoite);
+//    } catch (NamingException ex) {
+//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+//    } catch (SQLException ex) {
+//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+//            
+//
+//        }
+        response.setContentType("text/html;charset=UTF-8");
+        naytaJSP("laakarinsivu.jsp", request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,40 +99,8 @@ public class Laakarinsivu extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
-HttpSession session = request.getSession();
-
-        Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
-        if (kirjautunut == null) {
-            response.sendRedirect("login");
-            return;
-        }
-        request.setAttribute("kayttaja", kirjautunut.getNimi());
-        
-        List<Varaustiedot> varaukset = Varaustiedot.getVaraustiedot(kirjautunut.getKayttaja_id());
-      //  List<Varaus> varaukset = Varaus.getLaakarinVaraukset(kirjautunut.getKayttaja_id());
-        request.setAttribute("varaukset", varaukset);
-        List<Kayttaja> asiakkaat = Kayttaja.getAsiakkaat();
-        request.setAttribute("asiakkaat", asiakkaat);
-        
-        
-//        if (request.getParameter("varaus") != null) {
-//        int asiakas_id = Integer.parseInt(request.getParameter("varaus"));   
-//           
-//    try {
-//         List<Kayttaja> nimiosoite = Kayttaja.etsiLaakarinkayttajat(asiakas_id);
-//         request.setAttribute("asiakkaat", nimiosoite);
-//    } catch (NamingException ex) {
-//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
-//    } catch (SQLException ex) {
-//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
-//    }
-//            
-//
-//        }
-        
-        response.setContentType("text/html;charset=UTF-8");
-        naytaJSP("laakarinsivu.jsp", request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -99,7 +114,7 @@ HttpSession session = request.getSession();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

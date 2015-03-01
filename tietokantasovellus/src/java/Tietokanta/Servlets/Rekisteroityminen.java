@@ -5,7 +5,6 @@
  */
 package Tietokanta.Servlets;
 
-
 import Tietokanta.Mallit.Kayttaja;
 import static Tietokanta.Mallit.Kayttaja.etsiKayttajaTunnuksilla;
 import Tietokanta.Yhteys;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpSession;
  * @author mkojala
  */
 public class Rekisteroityminen extends HttpServlet {
-   
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,21 +41,24 @@ public class Rekisteroityminen extends HttpServlet {
      * @throws java.sql.SQLException
      * @throws javax.naming.NamingException
      */
-         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, NamingException {     
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, NamingException {
         String salasana = request.getParameter("salasana");
         String nimi = request.getParameter("nimi");
         String kayttajatunnus = request.getParameter("ktunnus");
-        String osoite = request.getParameter("osoite");  
-         
-         Kayttaja kayttaja = new Kayttaja();              
-         kayttaja.tallenna(kayttajatunnus, nimi, osoite, salasana, 2);
-        
-       
+        String osoite = request.getParameter("osoite");
+
+        Kayttaja kayttaja = new Kayttaja();
+
+        try {
+            kayttaja.tallenna(kayttajatunnus, nimi, osoite, salasana, 2);
             response.sendRedirect("login");
- 
-             
-           
+        } catch (SQLException ex) {
+            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,13 +73,13 @@ public class Rekisteroityminen extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             try {
-                 processRequest(request, response);
-             } catch (SQLException ex) {
-                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-             } catch (NamingException ex) {
-                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-             }
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -92,13 +93,14 @@ public class Rekisteroityminen extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             try {
-                 processRequest(request, response);
-             } catch (SQLException ex) {
-                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-             } catch (NamingException ex) {
-                 Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-             }
+
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -110,14 +112,16 @@ public class Rekisteroityminen extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response)
+
+    private void naytaJSP(String loginjsp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         RequestDispatcher dispatcher = request.getRequestDispatcher(loginjsp);
 
         dispatcher.forward(request, response);
     }
-public void asetaVirhe(String viesti, HttpServletRequest request) {
+
+    public void asetaVirhe(String viesti, HttpServletRequest request) {
         request.setAttribute("viesti", viesti);
     }
 

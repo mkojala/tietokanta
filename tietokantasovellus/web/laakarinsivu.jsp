@@ -55,7 +55,7 @@
                         </c:forEach>
                     </select>
                     <div>
-                        <button type="submit" class="btn btn-default">Hae potilashistoria</button>
+                        <button type="button" class="btn btn-default">Hae potilashistoria</button>
                     </div>
                     <h4>Potilashistoria:</h4>
                     <c:forEach var="raportti" items="${raportit}"> 
@@ -63,15 +63,11 @@
                     <br /><c:out value="${raportti.hoito_ohjeet}"/>
                 </c:forEach> 
                     <div>
-                        <input type="text" class="form-control" id="raportti" name="raportti" placeholder="Kirjoita asiakkaalle hoito-ohjeet">
-                        
-                        <button type="submit" class="btn btn-xs btn-default"> Lisää hoito-ohjeet</button>
-                        <button type="button" class="btn btn-xs btn-default"> Potilashistoria</button>
-                        <button type="submit" class="btn btn-xs btn-default"> Lisää raportti</button>
-                        <p>Tähän tulee potilaan tietoja</p>
+                        <input type="text" class="form-control" id="hoito_ohje" name="hoito_ohje" placeholder="Kirjoita asiakkaalle hoito-ohjeet">
+                        <input type="text" class="form-control" id="raportti" name="raportti" placeholder="Kirjoita potilasraportti">
                         <button type="submit" class="btn btn-xs btn-default"> Tallenna</button>
-                        <button type="submit" class="btn btn-xs btn-default"> Muokkaa</button>
-                        <button type="button" class="btn btn-xs btn-default"> Poista</button>
+<!--                       <button type="submit" class="btn btn-xs btn-default"> Muokkaa</button>
+                        <button type="button" class="btn btn-xs btn-default"> Poista</button>-->
                     </div>
                 </form>
             </div>
