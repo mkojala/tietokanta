@@ -31,10 +31,12 @@ public class Laakarinsivu extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws javax.naming.NamingException
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws ServletException, IOException{
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,12 +47,12 @@ public class Laakarinsivu extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws javax.naming.NamingException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-                        HttpSession session = request.getSession();
+            throws ServletException, IOException{
+HttpSession session = request.getSession();
 
         Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
         if (kirjautunut == null) {
@@ -58,9 +60,26 @@ public class Laakarinsivu extends HttpServlet {
             return;
         }
         request.setAttribute("kayttaja", kirjautunut.getNimi());
+        
+        
         List<Varaus> varaukset = Varaus.getLaakarinVaraukset(kirjautunut.getKayttaja_id());
         request.setAttribute("varaukset", varaukset);
-
+        
+//        if (request.getParameter("varaus") != null) {
+//        int asiakas_id = Integer.parseInt(request.getParameter("varaus"));   
+//           
+//    try {
+//         List<Kayttaja> nimiosoite = Kayttaja.etsiLaakarinkayttajat(asiakas_id);
+//         request.setAttribute("asiakkaat", nimiosoite);
+//    } catch (NamingException ex) {
+//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+//    } catch (SQLException ex) {
+//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+//            
+//
+//        }
+        
         response.setContentType("text/html;charset=UTF-8");
         naytaJSP("laakarinsivu.jsp", request, response);
     }

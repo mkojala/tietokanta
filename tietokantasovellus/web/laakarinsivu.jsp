@@ -28,18 +28,17 @@
                 <table class="table table-striped">            
                     <thead>
                         <tr>
-                            <th>Nimi</th>
-                            <th>Osoite</th>
                             <th>Päivä</th>
                             <th>Oireet</th>
                         </tr>
                     </thead>
-                    <tbody><tr>
-                        <c:forEach var="varaus" items="${varaukset}"> 
-                    <td /><c:out value="${varaus.paiva}"/> 
-                    <td /><c:out value="${varaus.oireet}"/>          
+                    <tbody>
+                        <c:forEach var="varaus" items="${varaukset}">
+                            <tr>
+                            <td ><c:out value="${varaus.paiva}"/></td>
+                            <td ><c:out value="${varaus.oireet}"/></td>   
+                            </tr>
                 </c:forEach> 
-                    </tr>
                     </tbody>
                 </table>
             </div>  

@@ -61,7 +61,7 @@ public class Varaus {
         this.varaus_id = varaus_id;
     }
 
-    public int getAsiakas_id() {
+    public  int getAsiakas_id() {
         return asiakas_id;
     }
 
@@ -92,7 +92,7 @@ public class Varaus {
     public void setOireet(String oireet) {
         this.oireet = oireet;
     }
-
+    
     public static List<Varaus> getAsiakkaanVaraukset(int asiakas_id) {
         ArrayList<Varaus> varaukset = new ArrayList<Varaus>();
         try {
