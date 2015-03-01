@@ -51,7 +51,7 @@ public class Rekisteroityminen extends HttpServlet {
         String osoite = request.getParameter("osoite");  
          
          Kayttaja kayttaja = new Kayttaja();              
-         kayttaja.tallenna(kayttajatunnus, nimi, salasana, osoite, 2);
+         kayttaja.tallenna(kayttajatunnus, nimi, osoite, salasana, 2);
         
        
             response.sendRedirect("login");

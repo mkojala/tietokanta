@@ -28,41 +28,51 @@
                 <table class="table table-striped">            
                     <thead>
                         <tr>
+                            <th>Nimi</th>
+                            <th>Osoite</th>
                             <th>Päivä</th>
                             <th>Oireet</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="varaus" items="${varaukset}">
+                        <c:forEach var="varaustiedot" items="${varaukset}">
                             <tr>
-                            <td ><c:out value="${varaus.paiva}"/></td>
-                            <td ><c:out value="${varaus.oireet}"/></td>   
+                                <td ><c:out value="${varaustiedot.nimi}"/></td>
+                                <td ><c:out value="${varaustiedot.osoite}"/></td>  
+                                <td ><c:out value="${varaustiedot.paiva}"/></td>
+                                <td ><c:out value="${varaustiedot.oireet}"/></td>   
                             </tr>
-                </c:forEach> 
+                        </c:forEach> 
                     </tbody>
                 </table>
             </div>  
             <div class="container">     
-                <form class="form-horizontal" role="form" action="laakarinsivu" method="POST">      
-                    <div class="form-group">
-                        <h4>Etsi potilas</h4>
-                        <label for="nimi" class="col-md-2 control-label">Nimi</label>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="nimi" name="nimi" placeholder="Nimi">
-                        </div>
+                <form action="laakarinsivu" method="POST">      
+                    <h4>Valitse potilas</h4>
+                    <select name="asiakas">
+                        <c:forEach var="asiakas" items="${asiakkaat}">
+                            <option value="${asiakas.kayttaja_id}"><c:out value="${asiakas.nimi}"/></option>
+                        </c:forEach>
+                    </select>
+                    <div>
+                        <button type="submit" class="btn btn-default">Hae potilashistoria</button>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-5">
-                            <button type="submit" class="btn btn-default">Hae</button>
-                        </div>
+                    <h4>Potilashistoria:</h4>
+                    <c:forEach var="raportti" items="${raportit}"> 
+                    <br /><c:out value="${raportti.potilasraportti}"/> 
+                    <br /><c:out value="${raportti.hoito_ohjeet}"/>
+                </c:forEach> 
+                    <div>
+                        <input type="text" class="form-control" id="raportti" name="raportti" placeholder="Kirjoita asiakkaalle hoito-ohjeet">
+                        
+                        <button type="submit" class="btn btn-xs btn-default"> Lisää hoito-ohjeet</button>
+                        <button type="button" class="btn btn-xs btn-default"> Potilashistoria</button>
+                        <button type="submit" class="btn btn-xs btn-default"> Lisää raportti</button>
+                        <p>Tähän tulee potilaan tietoja</p>
+                        <button type="submit" class="btn btn-xs btn-default"> Tallenna</button>
+                        <button type="submit" class="btn btn-xs btn-default"> Muokkaa</button>
+                        <button type="button" class="btn btn-xs btn-default"> Poista</button>
                     </div>
-                    <button type="submit" class="btn btn-xs btn-default"> Lisää raportti</button>
-                    <button type="submit" class="btn btn-xs btn-default"> Lisää hoito-ohjeet</button>
-                    <button type="button" class="btn btn-xs btn-default"> Potilashistoria</button>
-                    <p>Tähän tulee potilaan tietoja</p>
-                    <button type="submit" class="btn btn-xs btn-default"> Tallenna</button>
-                    <button type="submit" class="btn btn-xs btn-default"> Muokkaa</button>
-                    <button type="button" class="btn btn-xs btn-default"> Poista</button>
                 </form>
             </div>
         </div>

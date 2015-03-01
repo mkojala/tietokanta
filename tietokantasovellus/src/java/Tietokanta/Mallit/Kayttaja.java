@@ -195,6 +195,52 @@ public class Kayttaja {
         return kirjautunut;
     }
 
+    public static List<Kayttaja> getAsiakkaat() {
+        ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
+        try {
+            String sql = "SELECT kayttaja_id, kayttajatunnus, nimi, salasana, oikeustaso from kayttaja where oikeustaso = 2";
+
+            Connection yhteys = Yhteys.getYhteys();
+            PreparedStatement kysely = yhteys.prepareStatement(sql);
+            ResultSet tulokset = kysely.executeQuery();
+
+            while (tulokset.next()) {
+
+                Kayttaja kayttaja = new Kayttaja();
+
+                kayttaja.setKayttaja_id(tulokset.getInt("kayttaja_id"));
+
+                kayttaja.setKayttajatunnus(tulokset.getString("kayttajatunnus"));
+
+                kayttaja.setNimi(tulokset.getString("nimi"));
+
+                kayttaja.setSalasana(tulokset.getString("salasana"));
+
+                kayttaja.setOikeustaso(tulokset.getInt("oikeustaso"));
+
+                kayttajat.add(kayttaja);
+            }
+            try {
+                tulokset.close();
+            } catch (SQLException e) {
+            }
+            try {
+                kysely.close();
+            } catch (SQLException e) {
+            }
+            try {
+                yhteys.close();
+            } catch (SQLException e) {
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kayttajat;
+
+    }
+
     public static List<Kayttaja> getLaakarit() {
         ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
         try {
@@ -242,7 +288,7 @@ public class Kayttaja {
     }
 
     public static List<Kayttaja> etsiLaakarinkayttajat(int kayttaja_id) throws NamingException, SQLException {
-       ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
+        ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
         String sql = "SELECT nimi, osoite FROM kayttaja, varaus where kayttaja_id = asiakas_id";
         Connection yhteys = Yhteys.getYhteys();
         PreparedStatement kysely = yhteys.prepareStatement(sql);
@@ -250,9 +296,8 @@ public class Kayttaja {
         ResultSet rs = kysely.executeQuery();
 
         //Alustetaan muuttuja, joka sisältää löydetyn käyttäjän
-       
         while (rs.next()) {
-            Kayttaja asiakas=new Kayttaja();
+            Kayttaja asiakas = new Kayttaja();
             //Kutsutaan sopivat tiedot vastaanottavaa konstruktoria 
             //ja asetetaan palautettava olio
             asiakas.setNimi(rs.getString("nimi"));

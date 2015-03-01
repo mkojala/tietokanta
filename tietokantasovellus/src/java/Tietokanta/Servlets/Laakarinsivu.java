@@ -3,6 +3,7 @@ package Tietokanta.Servlets;
 import Tietokanta.Mallit.Kayttaja;
 import Tietokanta.Mallit.Raportti;
 import Tietokanta.Mallit.Varaus;
+import Tietokanta.Mallit.Varaustiedot;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -61,9 +62,12 @@ HttpSession session = request.getSession();
         }
         request.setAttribute("kayttaja", kirjautunut.getNimi());
         
-        
-        List<Varaus> varaukset = Varaus.getLaakarinVaraukset(kirjautunut.getKayttaja_id());
+        List<Varaustiedot> varaukset = Varaustiedot.getVaraustiedot(kirjautunut.getKayttaja_id());
+      //  List<Varaus> varaukset = Varaus.getLaakarinVaraukset(kirjautunut.getKayttaja_id());
         request.setAttribute("varaukset", varaukset);
+        List<Kayttaja> asiakkaat = Kayttaja.getAsiakkaat();
+        request.setAttribute("asiakkaat", asiakkaat);
+        
         
 //        if (request.getParameter("varaus") != null) {
 //        int asiakas_id = Integer.parseInt(request.getParameter("varaus"));   

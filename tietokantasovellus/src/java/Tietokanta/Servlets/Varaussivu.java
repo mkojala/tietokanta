@@ -42,9 +42,7 @@ public class Varaussivu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException, SQLException, NamingException {
-//        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
-        //      DateFormat format = new SimpleDateFormat("yyyy-M-dd");
         Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
         
         
@@ -68,23 +66,7 @@ public class Varaussivu extends HttpServlet {
             varaus.varaa(asiakas_id, laakari_id, pvm, oireet);
             response.sendRedirect("varaussivu");
         }
-             //       Date pvm;
-        //     pvm = format.parse(request.getParameter("pvm"));
 
-        //   List<Varaus> varaukset = new ArrayList<Varaus>();
-        //   response.sendRedirect("varaussivu");
-        //      try {
-        //        Date pvm = format.parse(request.getParameter("pvm"));
-//            out.println("moikka moi");
-//            out.println(pvm.getTime());
-        //       varaukset = Varaus.getKaikkiVaraukset(new java.sql.Date(pvm.getTime()));
-        //     } catch (Exception e) {
-        //     }
-        //    request.setAttribute("varaukset", varaukset);
-//        out.println(varaukset.size());
-        
-   //     List<Varaus> varaukset = Varaus.getLaakarinVaraukset(laakari);
-        //    request.setAttribute("varaukset", varaukset);
         response.setContentType("text/html;charset=UTF-8");
         naytaJSP("varaussivu.jsp", request, response);
 
