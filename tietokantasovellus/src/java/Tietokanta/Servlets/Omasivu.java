@@ -30,12 +30,6 @@ public class Omasivu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-  
-
-//        for (Raportti r : raportit) {
-//        out.println(r.getOhjeet());
-//        out.println(r.getRaportti());
-//        }
 
 
     }

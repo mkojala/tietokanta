@@ -145,8 +145,7 @@ public class Kayttaja {
         tulokset.close();
 
         yhteys.close();
-        return;
-
+   //     return;
     }
 
     public static Kayttaja etsiKayttajaTunnuksilla(String kayttaja, String salasana) throws NamingException, SQLException {

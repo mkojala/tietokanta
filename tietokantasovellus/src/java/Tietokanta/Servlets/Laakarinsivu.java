@@ -45,43 +45,55 @@ public class Laakarinsivu extends HttpServlet {
             return;
         }
         request.setAttribute("kayttaja", kirjautunut.getNimi());
-
-        List<Varaustiedot> varaukset = Varaustiedot.getVaraustiedot(kirjautunut.getKayttaja_id());
-        //  List<Varaus> varaukset = Varaus.getLaakarinVaraukset(kirjautunut.getKayttaja_id());
-        request.setAttribute("varaukset", varaukset);
-        List<Kayttaja> asiakkaat = Kayttaja.getAsiakkaat();
-        request.setAttribute("asiakkaat", asiakkaat);
         int laakari_id = kirjautunut.getKayttaja_id();
         String potilasraportti = request.getParameter("raportti");
         String hoito_ohje = request.getParameter("hoito_ohje");
 
+        List<Varaustiedot> varaukset = Varaustiedot.getVaraustiedot(kirjautunut.getKayttaja_id());
+        request.setAttribute("varaukset", varaukset);
+        List<Kayttaja> asiakkaat = Kayttaja.getAsiakkaat();
+        request.setAttribute("asiakkaat", asiakkaat);
+        int asiakas_id = 0;
+        int checkbox = 0;
+
         if (request.getParameter("asiakas") != null) {
-            int asiakas_id = Integer.parseInt(request.getParameter("asiakas"));
-            List<Raportti> raportit = Raportti.getAsiakkaanRaportit(asiakas_id);
-            request.setAttribute("raportit", raportit);
-            Raportti rap = new Raportti();
-            try {
-                rap.tallennaRaportti(asiakas_id, laakari_id, potilasraportti, hoito_ohje);
-                response.sendRedirect("laakarinsivu");
-            } catch (SQLException ex) {
-                Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NamingException ex) {
-                Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+            asiakas_id = Integer.parseInt(request.getParameter("asiakas"));
+        
+        String button = request.getParameter("button");
+
+       // int raportti_id;
+            
+            if (button.equals("Hae")) {
+                List<Raportti> raportit = Raportti.getAsiakkaanRaportit(asiakas_id);
+                request.setAttribute("raportit", raportit);
+                
+            } else if (button.equals("Tallenna")&&request.getParameter("asiakas") != null) {
+                Raportti rap = new Raportti();
+                try {
+                    rap.tallennaRaportti(asiakas_id, laakari_id, potilasraportti, hoito_ohje);
+                    response.sendRedirect("laakarinsivu");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NamingException ex) {
+                    Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else if (button.equals("Muokkaa")&&request.getParameter("asiakas") != null) {
+                
+            } else if (button.equals("Poista")&&request.getParameter("asiakas") != null&& request.getParameter("checkbox") !=null) {
+                checkbox = Integer.parseInt(request.getParameter("checkbox"));
+              //  raportti_id = Integer.parseInt(request.getParameter("raportti"));
+                try {
+                    Raportti r = new Raportti();
+                    r.poistaRaportti(checkbox);
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NamingException ex) {
+                    Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
         }
-
-//    try {
-//         List<Kayttaja> nimiosoite = Kayttaja.etsiLaakarinkayttajat(asiakas_id);
-//         request.setAttribute("asiakkaat", nimiosoite);
-//    } catch (NamingException ex) {
-//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
-//    } catch (SQLException ex) {
-//        Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
-//    }
-//            
-//
-//        }
         response.setContentType("text/html;charset=UTF-8");
         naytaJSP("laakarinsivu.jsp", request, response);
 

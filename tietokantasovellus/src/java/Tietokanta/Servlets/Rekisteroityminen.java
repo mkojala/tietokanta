@@ -42,7 +42,7 @@ public class Rekisteroityminen extends HttpServlet {
      * @throws javax.naming.NamingException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, NamingException {
+            throws ServletException, IOException {
         String salasana = request.getParameter("salasana");
         String nimi = request.getParameter("nimi");
         String kayttajatunnus = request.getParameter("ktunnus");
@@ -58,7 +58,8 @@ public class Rekisteroityminen extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        naytaJSP("login.jsp",request,response);
+        response.setContentType("text/html;charset=UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,13 +74,7 @@ public class Rekisteroityminen extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
-            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -94,13 +89,7 @@ public class Rekisteroityminen extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
-            Logger.getLogger(Rekisteroityminen.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**

@@ -41,7 +41,7 @@ public class Varaussivu extends HttpServlet {
      * @throws javax.naming.NamingException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException, SQLException, NamingException {
+            throws ServletException, IOException{
         HttpSession session = request.getSession();
         Kayttaja kirjautunut = (Kayttaja) session.getAttribute("kirjautunut");
         
@@ -63,12 +63,18 @@ public class Varaussivu extends HttpServlet {
         if (request.getParameter("laakari") != null) {
             int laakari_id = Integer.parseInt(request.getParameter("laakari"));
             Varaus varaus = new Varaus();
-            varaus.varaa(asiakas_id, laakari_id, pvm, oireet);
-            response.sendRedirect("varaussivu");
+            try {
+                varaus.varaa(asiakas_id, laakari_id, pvm, oireet);
+                response.sendRedirect("varaussivu");
+            } catch (SQLException ex) {
+                Logger.getLogger(Varaussivu.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NamingException ex) {
+                Logger.getLogger(Varaussivu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
-
+        naytaJSP("varaussivu.jsp",request,response);
         response.setContentType("text/html;charset=UTF-8");
-        naytaJSP("varaussivu.jsp", request, response);
 
     }
 
@@ -84,17 +90,8 @@ public class Varaussivu extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            try {
                 processRequest(request, response);
-            } catch (ParseException ex) {
-                Logger.getLogger(Varaussivu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (NamingException ex) {
-            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     /**
@@ -108,17 +105,7 @@ public class Varaussivu extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            try {
                 processRequest(request, response);
-            } catch (ParseException ex) {
-                Logger.getLogger(Varaussivu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (NamingException ex) {
-            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**

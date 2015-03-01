@@ -54,23 +54,37 @@
                             <option value="${asiakas.kayttaja_id}"><c:out value="${asiakas.nimi}"/></option>
                         </c:forEach>
                     </select>
-                    <div>
-                        <button type="button" class="btn btn-default">Hae potilashistoria</button>
-                    </div>
-                    <h4>Potilashistoria:</h4>
-                    <c:forEach var="raportti" items="${raportit}"> 
-                    <br /><c:out value="${raportti.potilasraportti}"/> 
-                    <br /><c:out value="${raportti.hoito_ohjeet}"/>
-                </c:forEach> 
+
+                    <input type="submit" value="Hae" name="button">
+                    <h4>Potilashistoria</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Potilasraportti</th>
+                                <th> Hoito-ohje</th>
+                                <th>Valitse</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="raportti" items="${raportit}"> 
+                                <tr value="${raportti.raportti_id}" >
+                                    <td><c:out value="${raportti.potilasraportti}"/></td>
+                                    <td ><c:out value="${raportti.hoito_ohjeet}"/></td>
+                                 <td>  
+                                        <input type="checkbox" name="checkbox" value="${raportti.raportti_id}"/>  
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                     <div>
                         <input type="text" class="form-control" id="hoito_ohje" name="hoito_ohje" placeholder="Kirjoita asiakkaalle hoito-ohjeet">
                         <input type="text" class="form-control" id="raportti" name="raportti" placeholder="Kirjoita potilasraportti">
-                        <button type="submit" class="btn btn-xs btn-default"> Tallenna</button>
-<!--                       <button type="submit" class="btn btn-xs btn-default"> Muokkaa</button>
-                        <button type="button" class="btn btn-xs btn-default"> Poista</button>-->
+                        <input type="submit" class="btn btn-xs btn-default" value ="Tallenna" name="button">
+                        <input type="submit" class="btn btn-xs btn-default" value ="Muokkaa" name ="button">
+                        <input type="submit" class="btn btn-xs btn-default" value ="Poista" name="button">
                     </div>
                 </form>
             </div>
-        </div>
     </body>
 </html>
