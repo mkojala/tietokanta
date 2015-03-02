@@ -63,7 +63,7 @@
                                 <th>Raportti-ID</th>
                                 <th>Potilasraportti</th>
                                 <th>Hoito-ohje</th>
-                                <th>Poista</th>
+                                <th>Valitse</th>
                             </tr>
                         </thead>
                         <tbody>

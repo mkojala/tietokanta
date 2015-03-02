@@ -213,21 +213,19 @@ public class Raportti {
         } catch (SQLException e) {
         }
     }
-     public static void muokkaaRaporttia(int raportti_id) throws SQLException, NamingException {
-        String sql = "UPDATE raportti SET potilasraportti = ?, hoito_ohjeet = ? WHERE raportti_id = ?";
+     public static void muokkaaRaporttia(Raportti r) throws SQLException, NamingException {
+        String sql = "UPDATE raportti SET asiakas_id =?, laakari_id= ?, potilasraportti = ?, hoito_ohjeet = ? WHERE raportti_id = ?";
         Connection yhteys = Yhteys.getYhteys();
         PreparedStatement kysely = yhteys.prepareStatement(sql);
-        kysely.setInt(1, raportti_id);
+        kysely.setInt(1, r.asiakas_id);
+        kysely.setInt(2, r.laakari_id);
+        kysely.setString(3, r.potilasraportti);
+        kysely.setString(4, r.hoito_ohjeet);
+        kysely.setInt(5, r.raportti_id);
+       
         int tulos = kysely.executeUpdate();
-        
-        try {
             kysely.close();
-        } catch (SQLException e) {
-        }
-        try {
             yhteys.close();
-        } catch (SQLException e) {
-        }
     }
 
 

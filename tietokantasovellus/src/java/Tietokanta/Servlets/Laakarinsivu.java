@@ -76,15 +76,28 @@ public class Laakarinsivu extends HttpServlet {
                     Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } else if (button.equals("Muokkaa") && request.getParameter("asiakas") != null) {
-
+            } else if (button.equals("Muokkaa") && request.getParameter("asiakas") != null && request.getParameter("checkbox") != null) {
+               int checkbox = Integer.parseInt(request.getParameter("checkbox"));  
+                asiakas_id = Integer.parseInt(request.getParameter("asiakas"));
+                try {
+                    Raportti r = new Raportti(); 
+                    r.setRaportti_id(checkbox);
+                    r.setAsiakas_id(asiakas_id);
+                    r.setLaakari_id(kirjautunut.getKayttaja_id());
+                    r.setPotilasraportti(request.getParameter("raportti"));
+                    r.setHoito_ohjeet(request.getParameter("hoito_ohje"));
+                    Raportti.muokkaaRaporttia(r);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NamingException ex) {
+                    Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else if (button.equals("Poista") && request.getParameter("asiakas") != null && request.getParameter("checkbox") != null) {
                 int checkbox = Integer.parseInt(request.getParameter("checkbox"));
                 //  raportti_id = Integer.parseInt(request.getParameter("raportti"));
                 try {
                     Raportti r = new Raportti();
                     r.poistaRaportti(checkbox);
-
                 } catch (SQLException ex) {
                     Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NamingException ex) {
