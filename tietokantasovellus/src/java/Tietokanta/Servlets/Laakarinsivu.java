@@ -54,20 +54,18 @@ public class Laakarinsivu extends HttpServlet {
         List<Kayttaja> asiakkaat = Kayttaja.getAsiakkaat();
         request.setAttribute("asiakkaat", asiakkaat);
         int asiakas_id = 0;
-        int checkbox = 0;
 
         if (request.getParameter("asiakas") != null) {
             asiakas_id = Integer.parseInt(request.getParameter("asiakas"));
-        
-        String button = request.getParameter("button");
+
+            String button = request.getParameter("button");
 
        // int raportti_id;
-            
             if (button.equals("Hae")) {
                 List<Raportti> raportit = Raportti.getAsiakkaanRaportit(asiakas_id);
                 request.setAttribute("raportit", raportit);
-                
-            } else if (button.equals("Tallenna")&&request.getParameter("asiakas") != null) {
+
+            } else if (button.equals("Tallenna") && request.getParameter("asiakas") != null) {
                 Raportti rap = new Raportti();
                 try {
                     rap.tallennaRaportti(asiakas_id, laakari_id, potilasraportti, hoito_ohje);
@@ -77,16 +75,16 @@ public class Laakarinsivu extends HttpServlet {
                 } catch (NamingException ex) {
                     Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-            } else if (button.equals("Muokkaa")&&request.getParameter("asiakas") != null) {
-                
-            } else if (button.equals("Poista")&&request.getParameter("asiakas") != null&& request.getParameter("checkbox") !=null) {
-                checkbox = Integer.parseInt(request.getParameter("checkbox"));
-              //  raportti_id = Integer.parseInt(request.getParameter("raportti"));
+
+            } else if (button.equals("Muokkaa") && request.getParameter("asiakas") != null) {
+
+            } else if (button.equals("Poista") && request.getParameter("asiakas") != null && request.getParameter("checkbox") != null) {
+                int checkbox = Integer.parseInt(request.getParameter("checkbox"));
+                //  raportti_id = Integer.parseInt(request.getParameter("raportti"));
                 try {
                     Raportti r = new Raportti();
                     r.poistaRaportti(checkbox);
-                    
+
                 } catch (SQLException ex) {
                     Logger.getLogger(Laakarinsivu.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NamingException ex) {
@@ -96,7 +94,6 @@ public class Laakarinsivu extends HttpServlet {
         }
         response.setContentType("text/html;charset=UTF-8");
         naytaJSP("laakarinsivu.jsp", request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -60,18 +60,22 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>Raportti-ID</th>
                                 <th>Potilasraportti</th>
-                                <th> Hoito-ohje</th>
-                                <th>Valitse</th>
+                                <th>Hoito-ohje</th>
+                                <th>Poista</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="raportti" items="${raportit}"> 
-                                <tr value="${raportti.raportti_id}" >
+                                <tr>
+                                    <td>
+                                        <c:out value="${raportti.raportti_id}"/>
+                                    </td>
                                     <td><c:out value="${raportti.potilasraportti}"/></td>
-                                    <td ><c:out value="${raportti.hoito_ohjeet}"/></td>
-                                 <td>  
-                                        <input type="checkbox" name="checkbox" value="${raportti.raportti_id}"/>  
+                                    <td><c:out value="${raportti.hoito_ohjeet}"/></td>
+                                    <td>
+                                     <input type="checkbox" name="checkbox" value="${raportti.raportti_id}"/></td> 
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -80,9 +84,9 @@
                     <div>
                         <input type="text" class="form-control" id="hoito_ohje" name="hoito_ohje" placeholder="Kirjoita asiakkaalle hoito-ohjeet">
                         <input type="text" class="form-control" id="raportti" name="raportti" placeholder="Kirjoita potilasraportti">
+                        <input type="submit" class="btn btn-xs btn-default" value="Poista" name="button">
                         <input type="submit" class="btn btn-xs btn-default" value ="Tallenna" name="button">
                         <input type="submit" class="btn btn-xs btn-default" value ="Muokkaa" name ="button">
-                        <input type="submit" class="btn btn-xs btn-default" value ="Poista" name="button">
                     </div>
                 </form>
             </div>

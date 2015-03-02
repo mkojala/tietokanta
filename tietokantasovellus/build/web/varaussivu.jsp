@@ -52,40 +52,6 @@
                         <button type="submit" class="btn btn-default">Varaa</button>
                     </div>
                 </form>
- 
-<!--            <div>  
-                <h4>Vapaat lääkärit</h4>
-                <table class="table table-striped">            
-                    <thead>
-                        <tr>
-                            <th>Lääkärin nimi</th>
-                            <th>Aika</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="varaus" items="${varaukset}">  
-                            <tr>
-                                <td><c:out value="${varaus.laakari_id}"/></td>
-                                <td><c:out value="${varaus.aika}"/> </td>
-                            </tr>
-                        </c:forEach> 
-                    </tbody>
-                </table>
-            </div>
-            <div class="container">
-                <form class="form-horizontal" role="form" action="varaussivu" method="POST">
-                    <div class="form-group">
-                        <label for="annaOireet" class="col-md-2 control-label">Oireeni:</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="annaOireet" name="Oireeni" placeholder="Oireeni">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-5">
-                            <button type="submit" class="btn btn-default">Varaa</button>
-                        </div>
-                    </div>
-                </form>-->
             </div>
         </div>
 </html>

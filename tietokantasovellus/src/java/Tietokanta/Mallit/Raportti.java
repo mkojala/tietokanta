@@ -76,7 +76,7 @@ public class Raportti {
     public static List<Raportti> getAsiakkaanRaportit(int asiakas_id) {
         ArrayList<Raportti> raportit = new ArrayList<Raportti>();
         try {
-            String sql = "SELECT asiakas_id, potilasraportti, hoito_ohjeet from raportti where asiakas_id = ?";
+            String sql = "SELECT asiakas_id, raportti_id, potilasraportti, hoito_ohjeet from raportti where asiakas_id = ?";
 
             Connection yhteys = Yhteys.getYhteys();
             PreparedStatement kysely = yhteys.prepareStatement(sql);
@@ -85,8 +85,9 @@ public class Raportti {
 
             while (tulokset.next()) {
 
-                Raportti raportti = new Raportti();
+                Raportti raportti = new Raportti();   
                 raportti.setAsiakas_id(tulokset.getInt("asiakas_id"));
+                raportti.setRaportti_id(tulokset.getInt("raportti_id"));
                 raportti.setPotilasraportti(tulokset.getString("potilasraportti"));
                 raportti.setHoito_ohjeet(tulokset.getString("hoito_ohjeet"));
                 raportit.add(raportti);
@@ -179,15 +180,12 @@ public class Raportti {
     }
 
     public void poistaRaportti(int raportti_id) throws SQLException, NamingException {
-
         String sql = "DELETE FROM raportti WHERE raportti_id = ?";
         Connection yhteys = Yhteys.getYhteys();
         PreparedStatement kysely = yhteys.prepareStatement(sql);
-        ResultSet tulokset = kysely.executeQuery();
-        kysely.close();
-
-        tulokset.close();
-
+        kysely.setInt(1, raportti_id);
+        int tulokset = kysely.executeUpdate();
+        kysely.close();      
         yhteys.close();
     }
 
@@ -202,17 +200,6 @@ public class Raportti {
         kysely.setString(3, potilasraportti);
         kysely.setString(4, hoito_ohjeet);
         ResultSet tulokset = kysely.executeQuery();
-
-//        Raportti raportti = null;
-//        
-//        if(tulokset.next()){
-//                raportti = new Raportti();
-//                raportti.setAsiakas_id(tulokset.getInt("asiakas_id"));
-//                raportti.setLaakari_id(tulokset.getInt("laakari_id"));
-//                raportti.setPotilasraportti(tulokset.getString("potilasraportti"));
-//                raportti.setHoito_ohjeet(tulokset.getString("hoito_ohjeet"));
-//                
-//        }
         try {
             tulokset.close();
         } catch (SQLException e) {
@@ -226,5 +213,22 @@ public class Raportti {
         } catch (SQLException e) {
         }
     }
+     public static void muokkaaRaporttia(int raportti_id) throws SQLException, NamingException {
+        String sql = "UPDATE raportti SET potilasraportti = ?, hoito_ohjeet = ? WHERE raportti_id = ?";
+        Connection yhteys = Yhteys.getYhteys();
+        PreparedStatement kysely = yhteys.prepareStatement(sql);
+        kysely.setInt(1, raportti_id);
+        int tulos = kysely.executeUpdate();
+        
+        try {
+            kysely.close();
+        } catch (SQLException e) {
+        }
+        try {
+            yhteys.close();
+        } catch (SQLException e) {
+        }
+    }
+
 
 }
